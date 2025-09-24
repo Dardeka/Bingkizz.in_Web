@@ -30,7 +30,12 @@ a{
     height: 40px;
     background-color: transparent;
     font-weight: 500;
-    color: white;}
+    color: white;
+}
+
+.buttons button a{
+    color: white;
+}
 
 .buttons button:hover{
     cursor: pointer;
