@@ -19,7 +19,7 @@ function Products(){
                 {/* Blue */}
                 <div class="w-[350px] h-[520px] border border-[#9f152f] rounded-lg overflow-hidden bg-white shadow">
                     <img
-                        src="/public/products/varBlue.jpg"
+                        src="/products/varBlue.jpg"
                         alt="Card image"
                         class="w-[299px] h-[300px] ml-auto mr-auto mt-[25px] rounded-md object-cover"
                     />
@@ -33,7 +33,7 @@ function Products(){
                 {/* Pink */}
                 <div class="w-[350px] h-[520px] border border-[#9f152f] rounded-lg overflow-hidden bg-white shadow">
                     <img
-                        src="/public/products/varPink.jpg"
+                        src="/products/varPink.jpg"
                         alt="Card image"
                         class="w-[299px] h-[300px] ml-auto mr-auto mt-[25px] rounded-md object-cover"
                     />
