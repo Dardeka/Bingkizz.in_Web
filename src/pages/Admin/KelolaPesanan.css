@@ -1,0 +1,61 @@
+.container-pesanan {
+  padding-top: 120px; /* karena header fixed 90px, kasih jarak sedikit */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ini bikin semua isi halaman ke tengah */
+}
+
+.kelola-pesanan {
+    width: 900px;
+    height: 250px;
+    color: rgb(224, 54, 54);
+    background-color: white;
+    border: 1px solid red;
+    border-radius: 20px;
+
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* biar konten di tengah vertikal dalam box */
+    text-align: center;
+    margin: auto;  
+
+}
+
+.gap {
+    height: 30px;
+
+}
+
+.judul{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+li {
+    width: 150px;
+    height: 80;
+    background-color: pink;
+    border: 1px solid red;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+ul li:hover {
+    background-color: red;
+    color: white;
+    transform: scale(1.1);
+}

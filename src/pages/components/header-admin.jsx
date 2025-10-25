@@ -8,6 +8,10 @@ function HeaderAdmin(){
         navigate("/dashboard-admin")
     }
 
+    const handleKelolaPesanan = () => {
+        navigate("/KelolaPesanan")
+    }
+
     const handleProducts_Admin = () => {
         navigate("/kelola-produk")
     }
@@ -19,7 +23,7 @@ function HeaderAdmin(){
                 <img src="/logo/white_logoTeksOnly.png" alt="" width="200px" className="mt-auto mb-auto" onClick={() => {handleHome()}}/>
                 <div className="flex mt-auto mb-auto ml-auto w-[650px] justify-evenly">
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleAdminHome()} >Home</Button>
-                    <Button className="!bg-transparent !text-white hover:!decoration-underline" >Manage Orders</Button>
+                    <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleKelolaPesanan()}>Manage Orders</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleProducts_Admin()}>Manage Products</Button>
                     <Button className="text-black" >Sign Up</Button>
                 </div>

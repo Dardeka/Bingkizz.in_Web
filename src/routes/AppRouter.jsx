@@ -6,6 +6,8 @@ import KelolaProduk from "../pages/Admin/Kelola-produk";
 import LoginPage from "../pages/LoginPage";
 import RegistPage from "../pages/RegistPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import KelolaPesanan from "../pages/Admin/KelolaPesanan";
+
 
 function AppRouter() {
   return (
@@ -17,6 +19,7 @@ function AppRouter() {
 
         <Route path="/detail-product" element={<DetailPage />} />
         <Route path="/dashboard-admin" element={<DashboardAdmin/>}/>
+        <Route path="/KelolaPesanan" element={<KelolaPesanan/>}/>
         <Route path="/kelola-produk" element={<KelolaProduk/>}/>
         <Route path="/checkout" element={<CheckoutPage/>}/>
       </Routes>
