@@ -28,7 +28,7 @@ function Header(){
                 <img src="/logo/white_logoTeksOnly.png" alt="" width="200px" className="mt-auto mb-auto" onClick={() => {handleHome()}}/>
                 <div className="flex mt-auto mb-auto ml-auto w-[650px] justify-evenly">
                     <Button className="text-black" onClick={() => scrollTo("HERO")}>Home</Button>
-                    <Button className="text-black" onClick={() => scrollTo("PRODUCT")}>Personal Gifts</Button>
+                    <Button className="text-black" onClick={() => scrollTo("PRODUCT")}>Our Product</Button>
                     <Button className="text-black" >How to Buy</Button>
                     <Button className="text-black" >About Us</Button>
                     <Button className="text-black" >Contact Us</Button>
