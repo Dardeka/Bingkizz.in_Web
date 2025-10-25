@@ -11,7 +11,7 @@ function Products(){
     return(
         <div>
             {/* Our Products */}
-            <div id="PRODUCT" className="content-center w-screen left-0 h-[70px] bg-[#9f152f]">
+            <div id="PRODUCT" className="content-center w-full left-0 h-[70px] bg-[#9f152f]">
                 <h2 className="text-white font-bold text-2xl" >Our Products</h2>
             </div>
             {/* Product Card */}

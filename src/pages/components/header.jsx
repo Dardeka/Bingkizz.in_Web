@@ -8,6 +8,14 @@ function Header(){
         navigate("/")
     }
 
+    const handleLogin = () => {
+        navigate("/login")
+    }
+
+    const handleRegist = () => {
+        navigate("/register")
+    }
+
     const scrollTo = (id) => {
         const element = document.getElementById(id)
         const navbarHeight = 90
@@ -32,8 +40,8 @@ function Header(){
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >How to Buy</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >About Us</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >Contact Us</Button>
-                    <Button className="text-black" >Sign In</Button>
-                    <Button className="text-black" >Sign Up</Button>
+                    <Button className="text-black" onClick={() => handleLogin()}>Sign In</Button>
+                    <Button className="text-black" onClick={() => handleRegist()}>Sign Up</Button>
                 </div>
             </div>
         </div>

@@ -1,15 +1,18 @@
+import { Button } from "../components/ui/button"
+import Footer from "./components/footer"
 import Header from "./components/header"
 import HeroSection from "./components/hero-section"
 import Products from "./components/products"
 
-
-
 function BingkizzinWeb(){
     return(
-        <div className="static top-0 h-[1920px] max-w-screen left-0 bg-[url(/images/Background.png)]">
+        <div className="flex flex-col w-full min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat">
             <Header/>
-            <HeroSection/>
-            <Products/>
+            <main className="flex-grow">
+                <HeroSection/>
+                <Products/>
+            </main>
+            <Footer/>
         </div>
     )
 }
