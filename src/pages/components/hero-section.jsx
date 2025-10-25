@@ -16,13 +16,11 @@ function HeroSection(){
                     delay: 3000,
                 })
             ]}>
-                <CarouselPrevious />
-                <CarouselContent>
+                <CarouselContent className="max-w-screen">
                     <CarouselItem><img src="/carousel/Carousel-1.png" alt="" /></CarouselItem>
                     <CarouselItem><img src="/carousel/Carousel-2.png" alt="" /></CarouselItem>
                     <CarouselItem><img src="/carousel/Carousel-3.png" alt="" /></CarouselItem>
                 </CarouselContent>
-                <CarouselNext />
             </Carousel>
         </div>
     )

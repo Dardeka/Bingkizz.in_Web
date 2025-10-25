@@ -2,7 +2,7 @@ import Header from "./components/header"
 
 function DetailPage(){
     return(
-        <div className="static top-0 h-[1920px] w-screen left-0 bg-[url(/public/images/background.png)]">
+        <div className="static top-0 h-[1920px] w-screen left-0 bg-[url(/images/Background.png)]">
             <Header/>
             <div className="">
                 <img src="/public/products/varBlue.jpg" alt="" width="400px" height="350px" />

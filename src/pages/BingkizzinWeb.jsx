@@ -6,7 +6,7 @@ import Products from "./components/products"
 
 function BingkizzinWeb(){
     return(
-        <div className="static top-0 h-[1920px] max-w-screen left-0 bg-[url(/public/images/background.png)]">
+        <div className="static top-0 h-[1920px] max-w-screen left-0 bg-[url(/images/Background.png)]">
             <Header/>
             <HeroSection/>
             <Products/>
