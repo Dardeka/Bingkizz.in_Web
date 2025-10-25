@@ -5,6 +5,7 @@ import DashboardAdmin from "../pages/Admin/Dashboard-Admin";
 import KelolaProduk from "../pages/Admin/Kelola-produk";
 import LoginPage from "../pages/LoginPage";
 import RegistPage from "../pages/RegistPage";
+import CheckoutPage from "../pages/CheckoutPage";
 
 function AppRouter() {
   return (
@@ -17,6 +18,7 @@ function AppRouter() {
         <Route path="/detail-product" element={<DetailPage />} />
         <Route path="/dashboard-admin" element={<DashboardAdmin/>}/>
         <Route path="/kelola-produk" element={<KelolaProduk/>}/>
+        <Route path="/checkout" element={<CheckoutPage/>}/>
       </Routes>
     </Router>
   );
