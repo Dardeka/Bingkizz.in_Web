@@ -1,4 +1,3 @@
-import { Button } from "../components/ui/button"
 import Footer from "./components/footer"
 import Header from "./components/header"
 import HeroSection from "./components/hero-section"
