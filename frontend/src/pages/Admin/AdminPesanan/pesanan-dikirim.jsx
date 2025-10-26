@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import './konfirmasi-pembayaran.css'
 
-function PesananSelesai(){
+function PesananDikirim(){
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate("/pesanan-dikirim");
+        navigate("/list-pesanan");
     }
 
     const handleNext = () => {
-        navigate("/complain");
+        navigate("/pesanan-selesai");
     }
 
 
@@ -18,8 +18,8 @@ function PesananSelesai(){
         <div>
             <div className="container-konfirmasi-pembayaran">
                 <div className="move">
-                    <div className="left"><button onClick={handleBack}>Lihat Pesanan Dikirim</button></div>
-                    <div className="right"><button onClick={handleNext}>Lihat Complain</button></div>
+                    <div className="left"><button onClick={handleBack}>Lihat List Pesanan</button></div>
+                    <div className="right"><button onClick={handleNext}>Lihat Pesanan Selesai</button></div>
                 </div>
                 <div>
                     <table class="table-auto">
@@ -40,7 +40,7 @@ function PesananSelesai(){
                                 <td>jl. Malcolm Lockyer</td>
                                 <td>Mr bones</td>
                                 <td>Rp. 25.000</td>
-                                <td><button className=" bg-red-500 text-red px-2 py-1 rounded">Kirim</button></td>
+                                <td><button className=" bg-red-500 text-red px-2 py-1 rounded">Pesanan Selesai</button></td>
                             </tr>
                             <tr>
                                 <td>BlackMamba</td>
@@ -68,4 +68,4 @@ function PesananSelesai(){
     )
 }
 
-export default PesananSelesai
+export default PesananDikirim

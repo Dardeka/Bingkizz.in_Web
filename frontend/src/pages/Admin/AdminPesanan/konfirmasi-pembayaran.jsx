@@ -19,7 +19,7 @@ function KonfirmasiPembayaran(){
             <div className="container-konfirmasi-pembayaran">
                 <div className="move">
                     <div className="left"><button onClick={handleBack}>Back</button></div>
-                    <div className="right"><button onClick={handleNext}>Next</button></div>
+                    <div className="right"><button onClick={handleNext}>Lihat List Pesanan</button></div>
                 </div>
                 <div>
                     <table class="table-auto">
