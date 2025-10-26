@@ -2,11 +2,13 @@ const express = require('express')
 const router = express.Router()
 const {Products} = require('../models')
 
+// Get all product
 router.get('/', async (req, res) => {
     const listOfProducts = await Products.findAll();
     res.json(listOfProducts);
 });
 
+// Post product
 router.post('/', async (req, res) => {
     const product = req.body
     await Products.create(product)

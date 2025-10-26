@@ -1,7 +1,42 @@
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
+import { ShoppingCart, User, LogOut } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function Header(){
+    const [accessToken, setAccessToken] = useState(null); 
+
+    useEffect(() => {
+        const token = sessionStorage.getItem('accessToken'); 
+        
+        if (token) {
+            setAccessToken(token);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem("accessToken"); 
+
+        setAccessToken(null); 
+
+        navigate("/"); 
+    }
+
     const navigate = useNavigate()
 
     const handleHome = () => {
@@ -10,6 +45,10 @@ function Header(){
 
     const handleOurProduct = () => {
         navigate("/ProductPage")
+    }
+
+    const handleCart = () => {
+        navigate("/checkout")
     }
 
     const handleLogin = () => {
@@ -44,8 +83,40 @@ function Header(){
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >How to Buy</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >About Us</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >Contact Us</Button>
-                    <Button className="text-black" onClick={() => handleLogin()}>Sign In</Button>
-                    <Button className="text-black" onClick={() => handleRegist()}>Sign Up</Button>
+                    {accessToken ? (
+                        <>
+                            {/* Shopping Cart - Ukuran Seragam: p-0 h-10 w-10 */}
+                            <Button 
+                                variant="ghost" 
+                                className="p-0 h-10 w-10 rounded-full" 
+                                onClick={handleCart}
+                            >
+                                <ShoppingCart className="h-6 w-6 text-black" /> 
+                            </Button>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild> 
+                                    {/* User Profile - Ukuran Seragam: p-0 h-10 w-10 */}
+                                    <Button variant="ghost" className="p-0 h-10 w-10 rounded-full"> 
+                                        <User className="h-6 w-6 text-black" /> 
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                
+                                <DropdownMenuContent className="w-40" align="end" forceMount>
+                                    <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                                    {/* Tombol Logout di dalam Dropdown */}
+                                    <DropdownMenuItem onClick={handleLogout} className="flex items-center">
+                                        <LogOut className="mr-2 h-4 w-4" />
+                                        <span>Keluar</span>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </>
+                    ) : (
+                        <>
+                            <Button className="text-black bg-transparent hover:bg-white/10" onClick={() => handleLogin()}>Sign In</Button>
+                            <Button className="text-black bg-transparent hover:bg-white/10" onClick={() => handleRegist()}>Sign Up</Button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

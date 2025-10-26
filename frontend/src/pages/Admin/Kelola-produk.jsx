@@ -1,3 +1,4 @@
+import React, { useState, useRef, useEffect } from 'react';
 import HeaderAdmin from "../components/header-admin"
 import { Button } from "../../components/ui/button"
 import {
@@ -9,8 +10,50 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
 
 function KelolaProduk(){
+    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+    const [addFormData, setAddFormData] = useState({
+        name: '',
+        desc: '',
+        stock: '',
+        price: '',
+        image: null,
+    });
+
+    // Handler buat tambah produk
+    const handleAddProduct = () => {
+        setAddFormData({
+            name: '',
+            desc: '',
+            stock: '',
+            price: '',
+            image: null,
+        });
+        setIsAddDialogOpen(true);
+    }
+
+    const handleAddFormChange = (e) => {
+        const { name, value } = e.target;
+        setAddFormData({ ...addFormData, [name]: value });
+    };
+
+    const handleButtonClick = () => {
+        fileInputRef.current.click();
+    };
+    
+
     const products = [
         {
             id: "001",
@@ -34,7 +77,45 @@ function KelolaProduk(){
             <div className="flex flex-col w-[1096px] mr-auto ml-auto">
                 <div className="flex flex-row justify-between items-center">
                     <h3 className="font-bold">Kelola Produk</h3>
-                    <Button className="!bg-[#9F152F] text-white">Tambah Produk</Button>
+                    <Dialog>
+                    <form>
+                        <DialogTrigger asChild>
+                        <Button variant="outline" className="!bg-[#9F152F] text-white">Tambah Produk</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Tambah Produk</DialogTitle>
+                            <DialogDescription>
+                            Masukkan data-data produk yang ingin dimasukkan
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4">
+                            <div className="grid gap-3">
+                            <label htmlFor="name-1">Nama Produk</label>
+                            <Input id="name-1" name="name" />
+                            </div>
+                            <div className="grid gap-3">
+                            <label htmlFor="username-1">Deskripsi Produk</label>
+                            <Input id="username-1" name="username" />
+                            </div>
+                            <div className="grid gap-3">
+                            <label htmlFor="username-1">Jumlah Stok</label>
+                            <Input id="username-1" name="username" />
+                            </div>
+                            <div className="grid gap-3">
+                            <label htmlFor="username-1">Harga Produk</label>
+                            <Input id="username-1" name="username" />
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit">Tambah</Button>
+                        </DialogFooter>
+                        </DialogContent>
+                    </form>
+                    </Dialog>
                 </div>
                 {/* Tabel */}
                 <div className="w-[1096px] min-h-[100px] h-auto bg-[#9F152F] rounded-[12px] mt-5 p-10">
@@ -61,6 +142,7 @@ function KelolaProduk(){
                         </TableBody>
                     </Table>
                 </div>
+                
             </div>
         </div>
     )
