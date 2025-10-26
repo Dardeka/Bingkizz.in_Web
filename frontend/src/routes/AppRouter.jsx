@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import RegistPage from "../pages/RegistPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import KelolaPesanan from "../pages/Admin/KelolaPesanan";
+import ProductPage from "../pages/ProductPage";
 
 
 function AppRouter() {
@@ -22,6 +23,10 @@ function AppRouter() {
         <Route path="/KelolaPesanan" element={<KelolaPesanan/>}/>
         <Route path="/kelola-produk" element={<KelolaProduk/>}/>
         <Route path="/checkout" element={<CheckoutPage/>}/>
+        
+        <Route path="/ProductPage" element={<ProductPage />} />
+
+       
       </Routes>
     </Router>
   );

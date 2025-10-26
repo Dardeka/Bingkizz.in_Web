@@ -1,7 +1,32 @@
 import './KelolaPesanan.css';
 import HeaderAdmin from "../components/header-admin"
+import { useNavigate } from "react-router-dom";
+
 
 function KelolaPesanan(){
+    const navigate = useNavigate()
+    
+    const handleKonfirmasiPembayaran = () => {
+        navigate("/konfirmasi-pembayaran")
+    }
+
+    const handleListPesanan = () => {
+        navigate("/list-pesanan")
+    }
+
+    const handlePesananDikirim = () => {   
+        navigate("/pesanan-dikirim")
+    }
+
+    const handlePesananSelesai = () => {
+        navigate("/pesanan-selesai")
+    }
+
+    const handleComplain = () => {
+        navigate("/complain")
+    }
+
+
     return(
         <div >
             <div className='container-pesanan'>
@@ -9,33 +34,34 @@ function KelolaPesanan(){
                 <div className="kelola-pesanan"> 
                     <div className='judul'> KELOLA PESANAN </div>
                     <div className='gap'></div>
-                    <ul > 
+                    <ul>
                         <li>
-                            <div className='list1'>
-                                <p>Konfirmasi Pembayaran</p>
-                            </div>
+                            <button className="list1" onClick={() => {handleKonfirmasiPembayaran()}}>
+                            <p>Konfirmasi Pembayaran</p>
+                            </button>
                         </li>
                         <li>
-                            <div className='list2'>
-                                <p>List Pesanan</p>
-                            </div>
+                            <button className="list2" onClick={() => {handleListPesanan()}}>
+                            <p>List Pesanan</p>
+                            </button>
                         </li>
                         <li>
-                            <div className='list1'>
-                                <p>Pesanan Dikirim</p>
-                            </div>
+                            <button className="list1" onClick={() => {handlePesananDikirim()}}>
+                            <p>Pesanan Dikirim</p>
+                            </button>
                         </li>
                         <li>
-                            <div className='list1'>
-                                <p>Pesanan Selesai</p>
-                            </div>
+                            <button className="list1" onClick={() => {handlePesananSelesai()}}>
+                            <p>Pesanan Selesai</p>
+                            </button>
                         </li>
                         <li>
-                            <div className='list1'>
-                                <p>Complain</p>
-                            </div>
+                            <button className="list1" onClick={() => {handleComplain()}}>
+                            <p>Complain</p>
+                            </button>
                         </li>
-                    </ul>
+                        </ul>
+
                 </div> 
             </div>
 

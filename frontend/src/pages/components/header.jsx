@@ -8,6 +8,10 @@ function Header(){
         navigate("/")
     }
 
+    const handleOurProduct = () => {
+        navigate("/ProductPage")
+    }
+
     const handleLogin = () => {
         navigate("/login")
     }
@@ -36,7 +40,7 @@ function Header(){
                 <img src="/logo/white_logoTeksOnly.png" alt="" width="200px" className="mt-auto mb-auto" onClick={() => {handleHome()}}/>
                 <div className="flex mt-auto mb-auto ml-auto w-[850px] justify-evenly">
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleHome()}>Home</Button>
-                    <Button className="!bg-transparent !text-white hover:!decoration-underline" >Our Product</Button>
+                    <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleOurProduct()} >Our Product</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >How to Buy</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >About Us</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >Contact Us</Button>
