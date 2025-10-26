@@ -36,7 +36,7 @@ function KelolaPesanan(){
                     <div className='gap'></div>
                     <ul>
                         <li>
-                            <button className="list1" onClick={() => {handleKonfirmasiPembayaran()}}>
+                            <button className="list1" onClick={handleKonfirmasiPembayaran}>
                             <p>Konfirmasi Pembayaran</p>
                             </button>
                         </li>

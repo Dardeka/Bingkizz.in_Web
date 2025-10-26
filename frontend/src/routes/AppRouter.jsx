@@ -8,6 +8,7 @@ import RegistPage from "../pages/RegistPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import KelolaPesanan from "../pages/Admin/KelolaPesanan";
 import ProductPage from "../pages/ProductPage";
+import KonfirmasiPembayaran from "../pages/Admin/AdminPesanan/konfirmasi-pembayaran";
 
 
 function AppRouter() {
@@ -25,7 +26,7 @@ function AppRouter() {
         <Route path="/checkout" element={<CheckoutPage/>}/>
         
         <Route path="/ProductPage" element={<ProductPage />} />
-
+        <Route path="/konfirmasi-pembayaran" element={<KonfirmasiPembayaran/>}/>
        
       </Routes>
     </Router>
