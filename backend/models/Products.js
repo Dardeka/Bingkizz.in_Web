@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        productDesc: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         productImage: {
             type: DataTypes.STRING,
             allowNull: false
@@ -18,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    Products.associate = (models) => {
-        Products.hasMany(models.CartItems, {
-            foreignKey: "productId",
-            onDelete: "CASCADE",
-        });
-    };
+    // Products.associate = (models) => {
+    //     Products.hasMany(models.CartItems, {
+    //         foreignKey: "productId",
+    //         onDelete: "CASCADE",
+    //     });
+    // };
 
     return Products
 }

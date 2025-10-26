@@ -22,7 +22,7 @@ function AppRouter() {
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegistPage/>}/>
 
-        <Route path="/detail-product" element={<DetailPage />} />
+        <Route path="/detail-product/:id" element={<DetailPage />} />
         <Route path="/dashboard-admin" element={<DashboardAdmin/>}/>
         <Route path="/KelolaPesanan" element={<KelolaPesanan/>}/>
         <Route path="/kelola-produk" element={<KelolaProduk/>}/>

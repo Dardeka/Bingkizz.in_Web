@@ -3,6 +3,7 @@ const router = express.Router()
 const { Carts, CartItems, Products } = require('../models');
 const { validateToken } = require('../middlewares/AuthMiddlewares');
 
+// Get CART
 router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
@@ -24,47 +25,54 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+// ADD to Cart
 router.post("/add", validateToken, async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  try{
+    const { productId, quantity } = req.body;
 
-  try {
-    let cart = await Carts.findOne({ where: { userId } });
-    if (!cart) {
-      cart = await Carts.create({ userId });
+    const userId = req.user.id
+
+    let cart = await Carts.findOne({where: {userId}});
+    if(!cart){
+      cart = await Carts.create({userId});
     }
 
-    let item = await CartItem.findOne({
-      where: { cartId: cart.id, productId },
-    });
+    let cartItem = await CartItems.findOne({where: {cartId: cartId, productId},});
 
-    if (item) {
-      item.quantity += quantity;
-      await item.save();
-    } else {
-      item = await CartItem.create({
+    const product = await Products.findByPk(id);
+    if(!product){
+      return res.status(404).json({message: "Product Not Found"});
+    }
+
+    if(cartItem){
+      cartItem.quantity += quantity;
+      await cartItem.save()
+    }else{
+      await CartItems.create({
         cartId: cart.id,
         productId,
-        quantity,
-      });
+        quantity
+      })
     }
 
-    res.json({ message: "Item added to cart", item });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to add item" });
-  }
-});
+    const allItems = await CartItems.findAll({
+      where: { cartId: cart.id },
+      include: Products,
+    });
 
-router.delete("/:cartItemId", async (req, res) => {
-  const { cartItemId } = req.params;
+    let total = 0;
+    allItems.forEach((item) => {
+      total += item.quantity * item.Product.price;
+    });
 
-  try {
-    await CartItem.destroy({ where: { id: cartItemId } });
-    res.json({ message: "Item removed from cart" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to remove item" });
-  }
+    cart.totalPrice = total;
+    await cart.save();
+
+    res.json({ message: "Product added to cart", cart });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
 });
 
 module.exports = router

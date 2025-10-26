@@ -20,6 +20,12 @@ app.use('/products', productRouter)
 const cartRouter = require('./routes/Cart');
 app.use('/cart', cartRouter)
 
+// handle image input for products
+const path = require('path');
+app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
+// app.use(express.static("public"));
+
+
 db.sequelize.sync().then(() =>{
     app.listen(3001, () => {
         console.log("Server running on port 3001");
