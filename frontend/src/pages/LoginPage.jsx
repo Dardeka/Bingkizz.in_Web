@@ -32,7 +32,10 @@ function LoginPage(){
             if(response.data.error){
                 alert(response.data.error);
             }else{
+                // console.log(response.data.accessToken);
                 sessionStorage.setItem("accessToken", response.data)
+                // sessionStorage.setItem("accessToken", response.data.accessToken)
+                // sessionStorage.setItem("userId", response.data.id)
                 handleDashboard()
             }
 

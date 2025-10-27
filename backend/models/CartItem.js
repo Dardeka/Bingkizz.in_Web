@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         CartItems.belongsTo(models.Carts, {
             foreignKey: "cartId"
         });
-        CartItems.hasMany(models.Products, {
-            foreignKey: "id",
+        CartItems.belongsTo(models.Products, {
+            foreignKey: "productId",
             onDelete: "CASCADE",
         });
     }

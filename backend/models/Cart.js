@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: "userId"
         });
         Carts.hasMany(models.CartItems, {
-            foreignKey: "CartId",
+            foreignKey: "cartId",
             onDelete: "CASCADE",
         })
     }

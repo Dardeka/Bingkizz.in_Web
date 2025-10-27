@@ -26,7 +26,7 @@ function AppRouter() {
         <Route path="/dashboard-admin" element={<DashboardAdmin/>}/>
         <Route path="/KelolaPesanan" element={<KelolaPesanan/>}/>
         <Route path="/kelola-produk" element={<KelolaProduk/>}/>
-        <Route path="/checkout" element={<CheckoutPage/>}/>
+        <Route path="/checkout/:id" element={<CheckoutPage/>}/>
         
         <Route path="/ProductPage" element={<ProductPage />} />
         <Route path="/konfirmasi-pembayaran" element={<KonfirmasiPembayaran/>}/>

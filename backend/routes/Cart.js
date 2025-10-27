@@ -4,14 +4,14 @@ const { Carts, CartItems, Products } = require('../models');
 const { validateToken } = require('../middlewares/AuthMiddlewares');
 
 // Get CART
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", validateToken, async (req, res) => {
   const { userId } = req.params;
   try {
     const cart = await Carts.findOne({
       where: { userId },
       include: [
         {
-          model: CartItem,
+          model: CartItems,
           include: [Products],
         },
       ],
@@ -28,21 +28,22 @@ router.get("/:userId", async (req, res) => {
 // ADD to Cart
 router.post("/add", validateToken, async (req, res) => {
   try{
-    const { productId, quantity } = req.body;
+    const { productId, quantity, userId } = req.body;
 
-    const userId = req.user.id
+    // const userId = req.user.id
+    console.log(userId)
+
+    const product = await Products.findByPk(productId);
+    if(!product){
+      return res.status(404).json({message: "Product Not Found"});
+    }
 
     let cart = await Carts.findOne({where: {userId}});
     if(!cart){
       cart = await Carts.create({userId});
     }
 
-    let cartItem = await CartItems.findOne({where: {cartId: cartId, productId},});
-
-    const product = await Products.findByPk(id);
-    if(!product){
-      return res.status(404).json({message: "Product Not Found"});
-    }
+    let cartItem = await CartItems.findOne({where: {CartId: cart.id, productId},});
 
     if(cartItem){
       cartItem.quantity += quantity;
@@ -50,20 +51,28 @@ router.post("/add", validateToken, async (req, res) => {
     }else{
       await CartItems.create({
         cartId: cart.id,
-        productId,
+        productId: productId,
         quantity
       })
     }
 
     const allItems = await CartItems.findAll({
-      where: { cartId: cart.id },
+      where: { CartId: cart.id },
       include: Products,
     });
 
     let total = 0;
     allItems.forEach((item) => {
-      total += item.quantity * item.Product.price;
-    });
+        // ✅ SOLUSI: Cek apakah item.Product TIDAK NULL sebelum mengakses propertinya
+        if (item.Product) { 
+              total += item.quantity * item.Product.productPrice; 
+        } else {
+            // Opsional: Log item yang bermasalah (productId yang hilang)
+            console.log(`Peringatan: Item keranjang dengan ID Product ${item.productId} tidak ditemukan.`);
+            // Anda bisa memilih untuk menghapus item keranjang ini jika produk sudah hilang
+            // item.destroy(); 
+        }
+    });
 
     cart.totalPrice = total;
     await cart.save();
