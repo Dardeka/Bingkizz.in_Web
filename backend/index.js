@@ -1,33 +1,41 @@
-const express = require('express')
-const app = express()
-const cors = require("cors")
+import express from "express"
+import mongoose from "mongoose"
+import cors from "cors"
+import dotenv from 'dotenv'
+import userRoute from "./routes/userRoute.js"
+import productRoute from "./routes/productRoute.js"
+import cartRoute from "./routes/cartRoute.js"
+import orderRoute from "./routes/orderRoute.js"
+
+dotenv.config();
+const app = express();
 
 app.use(express.json())
 app.use(cors())
+const PORT = process.env.PORT || 3000;
+const MONGOURL = process.env.MONGO_URL;
 
-const db = require('./models') 
+mongoose.connect(MONGOURL).then(() => {
+    console.log("Database is connected")
+    app.listen(PORT, () => {
+        console.log(`Server is running in port ${PORT}`)
+    })
+}).catch((error) => console.log("Database connection failed : ",error));
 
-// Routers
-// USERS TABLE
-const userRouter = require('./routes/Users');
-app.use("/auth", userRouter)
+// User Route
+app.use("/api/", userRoute)
 
-// PRODUCTS TABLE
-const productRouter = require('./routes/Products');
-app.use('/products', productRouter)
+// Product Route
+app.use("/api/product", productRoute)
 
-// CARTS TABLE
-const cartRouter = require('./routes/Cart');
-app.use('/cart', cartRouter)
+// Cart Route
+app.use("/api/cart", cartRoute)
 
-// handle image input for products
-const path = require('path');
-app.use('/images', express.static(path.join(__dirname, 'public', 'images')));
-// app.use(express.static("public"));
+// Order Route
+app.use("/api/admin/order", orderRoute)
 
-
-db.sequelize.sync().then(() =>{
-    app.listen(3001, () => {
-        console.log("Server running on port 3001");
-    });
-});
+/* 
+    1. Buat Controller 
+    2. Buat models
+    3. Buat routes
+*/
