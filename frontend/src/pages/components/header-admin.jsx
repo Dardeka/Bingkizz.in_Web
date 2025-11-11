@@ -5,15 +5,20 @@ function HeaderAdmin(){
     const navigate = useNavigate()
 
     const handleAdminHome = () => {
-        navigate("/dashboard-admin")
+        navigate("/admin")
     }
 
     const handleKelolaPesanan = () => {
-        navigate("/KelolaPesanan")
+        navigate("/admin/kelola-pesanan")
     }
 
     const handleProducts_Admin = () => {
-        navigate("/kelola-produk")
+        navigate("/admin/kelola-produk")
+    }
+
+    const handleSignOut = () => {
+        sessionStorage.removeItem("accessToken");
+        navigate("/")
     }
 
     return(
@@ -25,7 +30,7 @@ function HeaderAdmin(){
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleAdminHome()} >Home</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleKelolaPesanan()}>Manage Orders</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleProducts_Admin()}>Manage Products</Button>
-                    <Button className="text-black" >Sign Up</Button>
+                    <Button className="!bg-red-500 !text-white" onClick={handleSignOut}>Sign Out</Button>
                 </div>
             </div>
         </div>

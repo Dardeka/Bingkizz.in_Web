@@ -1,65 +1,95 @@
 import { useNavigate } from "react-router-dom";
-import './konfirmasi-pembayaran.css'
+// import './konfirmasi-pembayaran.css'
+import { useEffect, useState} from "react"
+import { Button } from "@/components/ui/button";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import HeaderAdmin from "../../components/header-admin";
 
 function KonfirmasiPembayaran(){
     const navigate = useNavigate();
+    const [orders, setOrders] = useState([]);
 
     const handleBack = () => {
-        navigate("/KelolaPesanan");
+        navigate("/admin/kelola-pesanan");
     }
 
     const handleNext = () => {
-        navigate("/list-pesanan");
+        navigate("/admin/list-pesanan");
     }
 
+    useEffect(() => {
+        const fetchOrderData = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/admin/order/showOrders');
 
-    
+                if(!response.ok){
+                    return res.status(500).json('Failed to fetch order data');
+                }
+
+                const respData = await response.json();
+                console.log("ini adalah isi dari fetch data: ",respData);
+
+                // Format order layout
+                const formattedOrders = respData.map(item => ({
+                    id: item._id,
+                    receiverName: item.receiverName,
+                    grandTotal: item.grandTotal,
+                    paymentStatus: item.paymentStatus,
+                    shippingStatus: item.shippingStatus
+                }));
+
+                console.log("ini adalah isi dari formatted orders: ",formattedOrders);
+                setOrders(formattedOrders);
+            } catch (error) {
+                console.error('Error fetching order data:', error);
+            }
+        };
+
+        fetchOrderData();
+    }, []);
+
+
     return(
         <div>
-            <div className="container-konfirmasi-pembayaran">
-                <div className="move">
-                    <div className="left"><button onClick={handleBack}>Back</button></div>
-                    <div className="right"><button onClick={handleNext}>Lihat List Pesanan</button></div>
+            <HeaderAdmin/>
+            <div className="px-10 w-screen">
+                <div className="flex flex-row justify-between my-5">
+                    <Button className="!bg-red-500 !text-white" onClick={handleBack}>Back</Button>
+                    <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat List Pesanan</Button>
                 </div>
-                <div>
-                    <table class="table-auto">
-                        <thead>
-                            <tr>
-                                <th>Username</th>
-                                <th>Detail Pesanan</th>
-                                <th>Alamat Penerima</th>
-                                <th>Nama Penerima</th>
-                                <th>Total yang harus dibayar</th>
-                                <th>Konfirmasi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ToTheBones</td>
-                                <td>1x Pinky hampers </td>
-                                <td>jl. Malcolm Lockyer</td>
-                                <td>Mr bones</td>
-                                <td>Rp. 25.000</td>
-                                <td><button className=" bg-red-500 text-red px-2 py-1 rounded">Acc</button></td>
-                            </tr>
-                            <tr>
-                                <td>BlackMamba</td>
-                                <td>1x Blueming hampers </td>
-                                <td>jl. Underpass pramuka</td>
-                                <td>rani</td>
-                                <td>Rp. 25.000</td>
-                                <td>Button acc</td>
-                            </tr>
-                            <tr>
-                                <td>shineonyou</td>
-                                <td>1x Pinky hampers </td>
-                                <td>jl. Bikini Bottom</td>
-                                <td>Ira</td>
-                                <td>Rp. 25.000</td>
-                                <td>Button acc</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className="">
+                    <Table>
+                        <TableHeader className="border-b-2 border-solid border-black-700">
+                            <TableRow>
+                                <TableHead className="text-center w-[16%]">Order ID</TableHead>
+                                <TableHead className="text-center w-[16%]">Nama penerima</TableHead>
+                                <TableHead className="text-center w-[16%]">Grand Total</TableHead>
+                                <TableHead className="text-center w-[16%]">Status Pembayaran</TableHead>
+                                <TableHead className="text-center w-[16%]">Status Pengiriman</TableHead>
+                                <TableHead className="text-center w-[16%]">Detail Pesanan</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {orders.filter((item) => item.paymentStatus === "Pending").map((item) => (
+                                <TableRow key={item.id}>
+                                    <TableCell className="w-[16%]">{item.id}</TableCell>
+                                    <TableCell className="w-[16%]">{item.receiverName}</TableCell>
+                                    <TableCell className="w-[16%]">{item.grandTotal}</TableCell>
+                                    <TableCell className="w-[16%]">{item.paymentStatus}</TableCell>
+                                    <TableCell className="w-[16%]">{item.shippingStatus}</TableCell>
+                                    <TableCell className="w-[16%]"><Button>Detail</Button></TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </div>
             </div>
 

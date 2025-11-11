@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
@@ -17,6 +18,10 @@ function LoginPage(){
         navigate("/")
     }
 
+    const handleAdminDashboard =() => {
+        navigate("/admin")
+    }
+
     const initVal = {
         username: "",
         password: "",
@@ -24,17 +29,17 @@ function LoginPage(){
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().required(),
-        password: Yup.string().min(8).max(10).required(),
+        password: Yup.string().min(8).max(20).required(),
     })
 
     const submit = (data) => {
-        axios.post("http://localhost:3001/auth/login", data).then((response) => {
+        axios.post("http://localhost:3001/api/login", data).then((response) => {
             if(response.data.error){
                 alert(response.data.error);
             }else{
-                // console.log(response.data.accessToken);
+                // console.log("ini adalah hasil : ",response.data)
+                // sessionStorage.setItem("accessToken", response.data)
                 sessionStorage.setItem("accessToken", response.data)
-                // sessionStorage.setItem("accessToken", response.data.accessToken)
                 // sessionStorage.setItem("userId", response.data.id)
                 handleDashboard()
             }
@@ -61,11 +66,34 @@ function LoginPage(){
                             <Field autocomplete="off" id="password" type="password" name="password" className="w-[409px] h-[47px] bg-[#D9D9D9] shadow-xl/20 rounded-[12px] px-[12px] outline-none"></Field>
                             <ErrorMessage name="password" component="span"/>
                             
-                            <Button type="submit" className="!bg-[#F4476D] mt-[50px] w-[409px] h-[47px] bg-[#D9D9D9] shadow-xl/20" >LOGIN</Button>
+                            <Button type="submit" className="!bg-[#F4476D] mt-[50px] !w-[409px] h-[47px] bg-[#D9D9D9] shadow-xl/20" >LOGIN</Button>
 
                             <div className="flex flex-col justify-center mx-auto mt-[26px]">
-                                <p>or Sign In with</p>
-                                <Button className="!bg-[#FF7070] flex flex-row justify-center items-center mt-[26px] w-[200px] h-[47px] shadow-xl/20"><img src="/logo/icon_google.png" alt="" /> Google</Button>
+                                <p className='mb-10'>or Sign In with</p>
+                                <GoogleOAuthProvider clientId="813358833309-obghdeqdsbc8s3gtm3r0bbshgaeonne1.apps.googleusercontent.com">
+                                    <GoogleLogin
+                                        onSuccess={(credentialResponse) => {
+                                            const googleToken = credentialResponse.credential;
+
+                                            console.log(credentialResponse);
+                                            axios.post("http://localhost:3001/auth/google", {token: googleToken}).then((response) => {
+                                                if (response.data && response.data.accessToken) {
+                                                    sessionStorage.setItem("accessToken", response.data.accessToken);
+                                                    handleDashboard();
+                                                } else {
+                                                    // Jika server tidak mengembalikan accessToken
+                                                    alert("Login Google berhasil, tetapi server tidak memberikan token akses.");
+                                                }
+
+                                                // alert("Login Successfully! \n Discover more sweetness with Bingkizz.in!")
+                                            });
+                                            // kirim credentialResponse.credential ke backend kalau mau verifikasi
+                                        }}
+                                        onError={() => {
+                                        console.log('Login Failed');
+                                        }}
+                                    />
+                                </GoogleOAuthProvider>
                                 <p className="mt-[35px]">New Here? <a onClick={() => handleRegist()}>Create new account</a></p>
                             </div>
                         </Form>

@@ -6,12 +6,17 @@ import userRoute from "./routes/userRoute.js"
 import productRoute from "./routes/productRoute.js"
 import cartRoute from "./routes/cartRoute.js"
 import orderRoute from "./routes/orderRoute.js"
+import checkoutRouter from "./routes/checkoutRoute.js"
 
 dotenv.config();
 const app = express();
 
 app.use(express.json())
 app.use(cors())
+
+// to make all images accessible from URL
+app.use('/images', express.static('public/images'));
+
 const PORT = process.env.PORT || 3000;
 const MONGOURL = process.env.MONGO_URL;
 
@@ -30,6 +35,9 @@ app.use("/api/product", productRoute)
 
 // Cart Route
 app.use("/api/cart", cartRoute)
+
+// Checkout Route
+app.use('/api/checkout', checkoutRouter)
 
 // Order Route
 app.use("/api/admin/order", orderRoute)

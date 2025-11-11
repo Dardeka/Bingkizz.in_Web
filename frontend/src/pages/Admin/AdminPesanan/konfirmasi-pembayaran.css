@@ -29,25 +29,3 @@ button{
     margin-left: 40px;
     margin-bottom: 20px;
 }
-
-table{
-    margin-left: 35px;
-    padding-top: 0px;
-}
-
-th {
-    border-bottom: 2px solid rgb(244, 128, 138);
-    color: rgb(207, 63, 75);
-}
-
-tr, td {
-    border-bottom: 1px solid rgb(244, 128, 138);
-}
-
-th, td {
-    width: 200px;
-}
-
-td{
-    height: 80px;
-}

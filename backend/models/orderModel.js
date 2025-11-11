@@ -6,12 +6,16 @@ const orderItemsSchema = new mongoose.Schema({
         ref: "Products",
         required: true
     },
+    productName: {
+        type: String,
+        required: true
+    },
     quantity: {
         type: Number,
         default: 1,
         required: true
     },
-}, {_id: false})
+})
 
 const orderSchema = new mongoose.Schema({
     userId: {
@@ -33,8 +37,7 @@ const orderSchema = new mongoose.Schema({
     },
     items: [orderItemsSchema],
     grandTotal: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Carts",
+        type: Number,
         required: true
     },
     paymentStatus: {

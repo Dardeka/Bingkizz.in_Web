@@ -33,6 +33,7 @@ export const register = async (req, res) => {
     }
 }
 
+// login
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -55,5 +56,16 @@ export const login = async (req, res) => {
         })
     } catch (error) {
         return res.status(500).json({error: error.message})
+    }
+}
+
+// get user for order confirmation
+export const getUser = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const userDetail = await User.findById(id)
+        res.json(userDetail)
+    } catch (error) {
+        console.log({error: error.message})
     }
 }

@@ -7,23 +7,23 @@ function KelolaPesanan(){
     const navigate = useNavigate()
     
     const handleKonfirmasiPembayaran = () => {
-        navigate("/konfirmasi-pembayaran")
+        navigate("/admin/konfirmasi-pembayaran")
     }
 
     const handleListPesanan = () => {
-        navigate("/list-pesanan")
+        navigate("/admin/list-pesanan")
     }
 
     const handlePesananDikirim = () => {   
-        navigate("/pesanan-dikirim")
+        navigate("/admin/pesanan-dikirim")
     }
 
     const handlePesananSelesai = () => {
-        navigate("/pesanan-selesai")
+        navigate("/admin/pesanan-selesai")
     }
 
     const handleComplain = () => {
-        navigate("/complain")
+        navigate("/admin/complain")
     }
 
 

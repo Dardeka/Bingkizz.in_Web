@@ -17,35 +17,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import ContactDropdown from "../ContactUs";
 
 function Header(){
     const [accessToken, setAccessToken] = useState(null); 
-
-    useEffect(() => {
-        const token = sessionStorage.getItem('accessToken'); 
-        
-        if (token) {
-            setAccessToken(token);
-        }
-    }, []);
-
-    const handleLogout = () => {
-        sessionStorage.removeItem("accessToken"); 
-
-        setAccessToken(null); 
-
-        navigate("/"); 
-    }
-
-    const navigate = useNavigate()
-
-    const handleHome = () => {
-        navigate("/")
-    }
-
-    const handleOurProduct = () => {
-        navigate("/ProductPage")
-    }
 
     function decodeJWT(token) {
         try {
@@ -61,9 +36,39 @@ function Header(){
         }
     }
 
+    useEffect(() => {
+        const token = sessionStorage.getItem('accessToken'); 
+        // console.log("Access Token di Header:", token);
+        if (token) {
+            setAccessToken(token);
+            const payload = decodeJWT(token);
+            // console.log("Token ditemukan:", token);
+            // console.log("User ID : ", payload.id);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem("accessToken"); 
+
+        setAccessToken(null); 
+
+        navigate("/"); 
+    }
+
+    const navigate = useNavigate()
+    
+
+    const handleHome = () => {
+        navigate("/")
+    }
+
+    const handleOurProduct = () => {
+        navigate("/ProductPage")
+    }
+
+
     const handleCart = () => {
-        const payload = decodeJWT(accessToken);
-        navigate('/checkout/'+payload.id);
+        navigate('/cart');
     }
 
     const handleLogin = () => {
@@ -97,21 +102,20 @@ function Header(){
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleOurProduct()} >Our Product</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >How to Buy</Button>
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" >About Us</Button>
-                    <Button className="!bg-transparent !text-white hover:!decoration-underline" >Contact Us</Button>
+                    {/* <Button className="!bg-transparent !text-white hover:!decoration-underline" >Contact Us</Button> */}
+                    <ContactDropdown/>
                     {accessToken ? (
                         <>
-                            {/* Shopping Cart - Ukuran Seragam: p-0 h-10 w-10 */}
                             <Button 
                                 variant="ghost" 
-                                className="p-0 h-10 w-10 rounded-full" 
+                                className="p-0 h-10 w-10 rounded-full !bg-white" 
                                 onClick={handleCart}
                             >
                                 <ShoppingCart className="h-6 w-6 text-black" /> 
                             </Button>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild> 
-                                    {/* User Profile - Ukuran Seragam: p-0 h-10 w-10 */}
-                                    <Button variant="ghost" className="p-0 h-10 w-10 rounded-full"> 
+                                    <Button variant="ghost" className="p-0 h-10 w-10 rounded-full !bg-white"> 
                                         <User className="h-6 w-6 text-black" /> 
                                     </Button>
                                 </DropdownMenuTrigger>
@@ -128,8 +132,8 @@ function Header(){
                         </>
                     ) : (
                         <>
-                            <Button className="text-black bg-transparent hover:bg-white/10" onClick={() => handleLogin()}>Sign In</Button>
-                            <Button className="text-black bg-transparent hover:bg-white/10" onClick={() => handleRegist()}>Sign Up</Button>
+                            <Button className="text-black !bg-white hover:bg-white/10" onClick={() => handleLogin()}>Sign In</Button>
+                            <Button className="text-black !bg-white hover:bg-white/10" onClick={() => handleRegist()}>Sign Up</Button>
                         </>
                     )}
                 </div>

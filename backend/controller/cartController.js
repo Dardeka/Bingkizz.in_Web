@@ -13,7 +13,7 @@ export const createCart = async (req, res) => {
         }
 
         let cart = await Cart.findOne({userId})
-        if(!cart){
+        if(!cart || !cart.cartItems){
             cart = new Cart({
                 userId,
                 cartItems: [],
@@ -23,8 +23,8 @@ export const createCart = async (req, res) => {
 
         for(const item of cartItems){
             const {productId, quantity} = item;
+            const targetProduct = await Product.findById(productId?.toString())
 
-            const targetProduct = await Product.findById(productId)
             if(!targetProduct){
                 return res.status(404).json({message: "Product not found in database"})
             }
@@ -62,12 +62,60 @@ export const createCart = async (req, res) => {
 export const showCart = async (req, res) => {
   const { userId } = req.params;
   try {
-    const cart = await Cart.findOne({where: { userId }});
+    // const result = await Cart.find()
+    const cart = await Cart.findOne({userId}).populate("cartItems.productId");
+    // console.log("Isi param : ", req.params)
 
     if (!cart) return res.json({ message: "Cart not found" });
-    res.json(cart);
+
+    const formattedCart = {
+        
+        CartItems: cart.cartItems.map((item) => {
+            const uniqueId = item._id ? item._id.toString() : 
+                             item.id ? item.id.toString() : 
+                             item.productId?._id?.toString() || `fallback-${Math.random()}`
+            return{
+                id: uniqueId,
+                quantity: item.quantity,
+                Product: {
+                    _id: item.productId._id,
+                    productName: item.productId.productName,
+                    productPrice: item.productId.productPrice,
+                    productImg: item.productId.productImg,
+                }
+            }
+        }),
+        totalPrice: cart.totalPrice
+    }
+    res.json(formattedCart);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch cart" });
   }
 }
+
+export const deleteCart = async (req, res) => {
+  try {
+    if (!req.user || !req.user.id) {
+      console.error("DEBUG: Token tidak mengandung User ID.");
+      return res.status(401).json({ error: "Token invalid, please login again." });
+    }
+    console.log("Isi request : ", req.body);
+    const cart = await Cart.findOne({userId: req.body.userId});
+
+    console.log("Produk ditemukan:", req.body.items);
+    for (const item in req.body.items){
+        const updateCart = await 
+        // (req.body.items[item].productId)
+        console.log("Produk adalah :", updateCart);
+    }
+
+    cart.totalPrice = 0
+    await cart.save();
+
+    res.json({ message: "All cart items deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};

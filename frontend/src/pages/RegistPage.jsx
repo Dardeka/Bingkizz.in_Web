@@ -27,7 +27,7 @@ function RegistPage() {
     })
 
     const submit = (data) => {
-        axios.post("http://localhost:3001/auth/regist", data).then((response) => {
+        axios.post("http://localhost:3001/api/register", data).then((response) => {
             console.log(response.data);
             if(response.data == "SUCCESS"){
                 alert("Thank You for Register!\n Let's Login to Your Account")

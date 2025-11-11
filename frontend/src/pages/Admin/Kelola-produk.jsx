@@ -46,20 +46,19 @@ function KelolaProduk(){
         setFetchError(null);
         try {
             // Ganti URL jika endpoint Anda berbeda
-            const response = await fetch('http://localhost:3001/products'); 
+            const response = await fetch('http://localhost:3001/api/product/show-products'); 
             if (!response.ok) {
                 throw new Error(`Failed to fetch products: ${response.statusText}`);
             }
             const data = await response.json();
             
-            // Asumsi backend me-return array of objects: 
-            // [{ id, productName, productStock, productPrice, ... }]
             const formattedProducts = data.map(item => ({
                 id: item.id,
                 name: item.productName,
+                image: item.productImg,
                 stock: item.productStock,
                 price: item.productPrice,
-                status: item.productStatus || 'active' // Gunakan status dari DB jika ada
+                status: item.productStatus || 'active'
             }));
 
             console.log("Fetched products:", formattedProducts);
@@ -99,7 +98,7 @@ function KelolaProduk(){
 
         setSubmitting(true);
         try {
-            const res = await fetch('http://localhost:3001/products', {
+            const res = await fetch('http://localhost:3001/api/product/add-product', {
                 method: 'POST',
                 body: fd 
             });

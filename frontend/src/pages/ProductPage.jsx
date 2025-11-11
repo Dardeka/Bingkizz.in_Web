@@ -16,18 +16,18 @@ function ProductPage(){
         setFetchError(null);
         try {
             // Ganti URL jika endpoint Anda berbeda
-            const response = await fetch('http://localhost:3001/products'); 
+            const response = await fetch('http://localhost:3001/api/product/show-products'); 
             if (!response.ok) {
                 throw new Error(`Failed to fetch products: ${response.statusText}`);
             }
             const data = await response.json();
             
             const formattedProducts = data.map(item => ({
-                id: item.id,
+                id: item._id,
                 name: item.productName,
                 stock: item.productStock,
                 price: item.productPrice,
-                image: item.productImage 
+                image: item.productImg
             }));
 
             console.log("Fetched products:", formattedProducts);

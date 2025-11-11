@@ -13,6 +13,7 @@ import ListPesanan from "../pages/Admin/AdminPesanan/list-pesanan";
 import PesananDikirim from "../pages/Admin/AdminPesanan/pesanan-dikirim";
 import PesananSelesai from "../pages/Admin/AdminPesanan/pesanan-selesai";
 import Complain from "../pages/Admin/AdminPesanan/complain";
+import OrderForm from "../pages/OrderForm";
 
 function AppRouter() {
   return (
@@ -22,18 +23,21 @@ function AppRouter() {
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/register" element={<RegistPage/>}/>
 
+        {/* Customer */}
         <Route path="/detail-product/:id" element={<DetailPage />} />
-        <Route path="/dashboard-admin" element={<DashboardAdmin/>}/>
-        <Route path="/KelolaPesanan" element={<KelolaPesanan/>}/>
-        <Route path="/kelola-produk" element={<KelolaProduk/>}/>
-        <Route path="/checkout/:id" element={<CheckoutPage/>}/>
-        
+        <Route path="/cart" element={<CheckoutPage/>}/>
+        <Route path="/order-form" element={<OrderForm/>}/>
         <Route path="/ProductPage" element={<ProductPage />} />
-        <Route path="/konfirmasi-pembayaran" element={<KonfirmasiPembayaran/>}/>
-        <Route path="/list-pesanan" element={<ListPesanan/>}/>
-        <Route path="/pesanan-dikirim" element={<PesananDikirim />}/>
-        <Route path="/pesanan-selesai" element={<PesananSelesai />}/>
-        <Route path="/complain" element={<Complain />}/>
+        
+        {/* Admin */}
+        <Route path="/admin" element={<DashboardAdmin/>}/>
+        <Route path="/admin/kelola-pesanan" element={<KelolaPesanan/>}/>
+        <Route path="/admin/kelola-produk" element={<KelolaProduk/>}/>
+        <Route path="/admin/konfirmasi-pembayaran" element={<KonfirmasiPembayaran/>}/>
+        <Route path="/admin/list-pesanan" element={<ListPesanan/>}/>
+        <Route path="/admin/pesanan-dikirim" element={<PesananDikirim />}/>
+        <Route path="/admin/pesanan-selesai" element={<PesananSelesai />}/>
+        <Route path="/admin/complain" element={<Complain />}/>
        
       </Routes>
     </Router>
