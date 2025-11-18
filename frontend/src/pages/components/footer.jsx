@@ -6,7 +6,7 @@ import { SiShopee } from "react-icons/si";
 
 function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-center mt-10 h-[170px] w-full bg-[#9f152f] text-white font-montserrat">
+    <footer className="flex flex-col items-center justify-center mt-10 h-[170px] w-full bg-[#9f152f] text-white font-montserrat bottom-0">
       <h2 className="font-bold">Find us on :</h2>
 
       <div className="flex flex-row mt-2 mb-2 space-x-2">

@@ -133,24 +133,26 @@ function DetailPage(){
     };
 
     return(
-        <div className="flex flex-col w-screen min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat">
+        <div className="flex flex-col w-screen min-h-screen bg-[#F1DFE4] bg-cover bg-no-repeat font-montserrat">
             <Header/>
-            <div className="flex flex-row w-[1196px] h-[495px] mt-30 ml-auto mr-auto bg-[#9F152F] p-5 rounded-[12px]">
+            <div className="flex flex-row w-[1196px] h-[495px] mt-30 ml-auto mr-auto p-5 mb-[110px]">
                 <img src={`http://localhost:3001${product.productImg}`} alt="" width="413px" height="313px" />
-                <div className="flex flex-col text-white ml-[80px] w-full mr-[45px]">
+                <div className="flex flex-col text-black ml-[80px] w-full mr-[45px]">
                     <div className="flex flex-col items-start">
-                        <p className="text-[32px] font-bold">{product.productName}</p>
-                        <p className="text-[22px]">Rp. {product.productPrice}</p>
-                        <p className="w-[484px] text-start text-xl mt-[43px]">{product.productDesc}</p>
+                        <p className="text-2xl text-left font-bold">{product.productName}</p>
+                        <p className="text-xl mt-4">Rp. {product.productPrice}</p>
+                        <p className="w-[600px] text-justify text-sm mt-[23px]">{product.productDesc}</p>
                         <p className="text-xl mt-[27px]"><b>Tersedia :</b> {product.productStock}</p>
                     </div>
-                    <div className="flex flex-row w-[150px] h-[40px] bg-[#B87B7B] mt-[39px] items-center justify-between rounded-[6px] items-start">
-                        <Button className="!bg-transparent" onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>-</Button>
-                        <p className="text-black bg-white w-[50px] h-[40px] content-center">{quantity}</p>
-                        <Button className="!bg-transparent" onClick={() => handleQuantityChange(1)}>+</Button>
-                    </div>
-                    <div className="flex mt-[25px] justify-end">
-                        <Button className="!bg-[#00FF62] !text-black w-[180px]" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Add to Cart</Button>
+                    <div className="flex flex-row justify-between items-center mt-[29px]">
+                        <div className="flex flex-row w-[150px] h-[40px] bg-[#B87B7B] items-center justify-between rounded-[6px] items-start">
+                            <Button className="!bg-transparent" onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>-</Button>
+                            <p className="text-black bg-white w-[50px] h-[40px] content-center">{quantity}</p>
+                            <Button className="!bg-transparent" onClick={() => handleQuantityChange(1)}>+</Button>
+                        </div>
+                        <div className="flex justify-end">
+                            <Button className="!bg-[#00FF62] !text-black w-[180px] font-bold" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Add to Cart</Button>
+                        </div>
                     </div>
                 </div>
             </div>

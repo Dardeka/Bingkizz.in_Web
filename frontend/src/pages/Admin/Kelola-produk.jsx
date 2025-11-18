@@ -235,7 +235,7 @@ function KelolaProduk(){
                                     <DialogClose asChild>
                                         <Button variant="outline" type="button" disabled={submitting}>Cancel</Button>
                                     </DialogClose>
-                                    <Button type="submit" disabled={submitting} className="!text-black">
+                                    <Button type="submit" disabled={submitting} className="!bg-red-500">
                                         {submitting ? 'Menambah...' : 'Tambah'}
                                     </Button>
                                 </DialogFooter>
@@ -245,7 +245,7 @@ function KelolaProduk(){
                 </div>
                 
                 {/* Tabel */}
-                <div className="w-[1096px] min-h-[100px] h-auto bg-[#9F152F] rounded-[12px] mt-5 p-10">
+                <div className="w-auto px-3 min-h-[100px] h-auto bg-[#9F152F] rounded-[12px] mt-5 p-10">
                     <Table className="rounded-[12px] bg-white">
                         <TableHeader>
                             <TableRow>
