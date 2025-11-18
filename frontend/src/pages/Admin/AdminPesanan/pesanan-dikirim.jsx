@@ -59,7 +59,7 @@ function PesananDikirim(){
     return(
         <div>
             <HeaderAdmin/>
-            <div className="px-10 w-screen">
+            <div className="px-10 w-screen pt-32">
                 <div className="flex flex-row justify-between my-5">
                     <Button className="!bg-red-500 !text-white" onClick={handleBack}>Lihat List Pesanan</Button>
                     <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Pesanan Selesai</Button>
@@ -84,7 +84,7 @@ function PesananDikirim(){
                                     <TableCell className="w-[16%]">{item.grandTotal}</TableCell>
                                     <TableCell className="w-[16%] bg-green-500 font-bold">{item.paymentStatus}</TableCell>
                                     <TableCell className="w-[16%]">{item.shippingStatus}</TableCell>
-                                    <TableCell className="w-[16%]"><Button>Detail</Button></TableCell>
+                                    <TableCell className="w-[16%]"><Button className="!bg-white !text-black rounded-[12px] shadow-xl/20">Detail</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

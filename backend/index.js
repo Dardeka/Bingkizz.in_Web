@@ -23,13 +23,13 @@ const MONGOURL = process.env.MONGO_URL;
 
 mongoose.connect(MONGOURL).then(() => {
     console.log("Database is connected")
-    // app.listen(PORT, () => {
-    //     console.log(`Server is running in port ${PORT}`)
-    // })
+    app.listen(PORT, () => {
+        console.log(`Server is running in port ${PORT}`)
+    })
 }).catch((error) => console.log("Database connection failed : ",error));
 
 // User Route
-app.use("/api/", userRoute)
+app.use("/api", userRoute)
 
 // Product Route
 app.use("/api/product", productRoute)
@@ -43,5 +43,5 @@ app.use('/api/checkout', checkoutRouter)
 // Order Route
 app.use("/api/admin/order", orderRoute)
 
-// export default app
-export const handler = serverless(app)
+// // export default app
+// export const handler = serverless(app)

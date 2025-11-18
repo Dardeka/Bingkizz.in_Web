@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/ui/button";
 import { useEffect, useState } from "react";
+import { Button } from "../components/ui/button";
+import Header from "./components/header";
 
 import {
   Table,
@@ -21,33 +21,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useNavigate } from "react-router-dom";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import HeaderAdmin from "../../components/header-admin";
-
-function ListPesanan(){
+function OrderHistory() {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
-
-    const handleBack = () => {
-        navigate("/admin/konfirmasi-pembayaran");
-    }
-
-    const handleNext = () => {
-        navigate("/admin/pesanan-dikirim");
-    }
+    const [userID, setUserID] = useState(null);
 
     useEffect(() => {
+        const token = sessionStorage.getItem('accessToken');
+
+        function decodeJWT(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        const payload = decodeJWT(token);
+        setUserID(payload.id);
+
         const fetchOrderData = async () => {
             try {
                 const response = await fetch('http://localhost:3001/api/admin/order/showOrders');
@@ -62,11 +62,12 @@ function ListPesanan(){
                 // Format order layout
                 const formattedOrders = respData.map(item => ({
                     id: item._id,
+                    userId: item.userId,
                     receiverName: item.receiverName,
+                    items: item.items,
                     grandTotal: item.grandTotal,
                     paymentStatus: item.paymentStatus,
-                    shippingStatus: item.shippingStatus,
-                    items: item.items
+                    shippingStatus: item.shippingStatus
                 }));
 
                 console.log("ini adalah isi dari formatted orders: ",formattedOrders);
@@ -78,44 +79,28 @@ function ListPesanan(){
 
         fetchOrderData();
     }, []);
-    
-    async function handleUpdateShipment(orderID, status){
-        try {
-            const response = await fetch('http://localhost:3001/api/admin/order/updateOrder', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    orderId: orderID,
-                    targetStatus: "Shipment",
-                    status: status
-                }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to update order status');
-            }
-            const updatedOrder = await response.json();
-            console.log('Order status updated:', updatedOrder);
-        } catch (error) {
-            console.error('Error updating order status:', error);
-        }
+
+    const handleProfile = () => {
+        navigate("/profile");
     }
 
     return(
-        <div>
-            <HeaderAdmin/>
-            <div className="px-10 w-screen pt-32">
-                <div className="flex flex-row justify-between my-5">
-                    <Button className="!bg-red-500 !text-white" onClick={handleBack}>Lihat Konfirmasi Pembayaran</Button>
-                    <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Pesanan Dikirim</Button>
+        <div className="w-screen h-screen top-0 left-0 right-0 font-montserrat bg-cover pt-[115px] bg-[url(/images/Background.png)]">
+            <Header/>
+            {/* Start user profile section */}
+            <div className="w-[1110px] h-[540px] bg-[#F1DFE4] flex flex-row mx-auto pt-[37px] pl-[33px] pr-[60px] shadow-xl/20">
+                <div className="h-[450px] flex flex-col items-center pr-[40px] mr-[40px] border-r-2 border-black/10">
+                    <h3 className="font-bold">User Profile</h3>
+                    <div className="flex flex-col mt-[27px] gap-[20px]">
+                        <Button className="!bg-transparent !text-black !w-[150px] cursor-pointer hover:!bg-gray-300 hover:shadow-xl/10" onClick={handleProfile}>User Info</Button>
+                        <Button className="!bg-gray-300 !text-black !w-[150px] cursor-pointer hover:!bg-gray-300 hover:shadow-xl/10">Order History</Button>
+                    </div>
                 </div>
-                <div>
+                <div className="mt-[20px]">
                     <Table>
-                        <TableHeader className="border-b-2 border-solid border-black-700">
+                        <TableHeader className="border-b-2 border-solid border-black/10">
                             <TableRow>
                                 <TableHead className="text-center w-[16%]">Order ID</TableHead>
-                                <TableHead className="text-center w-[16%]">Nama penerima</TableHead>
                                 <TableHead className="text-center w-[16%]">Grand Total</TableHead>
                                 <TableHead className="text-center w-[16%]">Status Pembayaran</TableHead>
                                 <TableHead className="text-center w-[16%]">Status Pengiriman</TableHead>
@@ -123,18 +108,17 @@ function ListPesanan(){
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {orders.filter((item) => item.paymentStatus === "Paid" && item.shippingStatus === "Processing Order").map((item) => (
+                            {orders.filter((item) => item.userId === userID).map((item) => (
                                 <TableRow key={item.id}>
                                     <TableCell className="w-[16%]">{item.id}</TableCell>
-                                    <TableCell className="w-[16%]">{item.receiverName}</TableCell>
                                     <TableCell className="w-[16%]">{item.grandTotal}</TableCell>
-                                    <TableCell className="w-[16%] bg-green-500 font-bold">{item.paymentStatus}</TableCell>
+                                    <TableCell className="w-[16%]">{item.paymentStatus}</TableCell>
                                     <TableCell className="w-[16%]">{item.shippingStatus}</TableCell>
                                     <TableCell className="w-[16%]">
                                         <Dialog>
                                             <form>
                                                 <DialogTrigger asChild>
-                                                    <Button variant="outline" className="shadow-xl">Detail</Button>
+                                                    <Button variant="outline">Detail</Button>
                                                 </DialogTrigger>
                                                 <DialogContent className="sm:max-w-[425px]">
                                                     <DialogHeader>
@@ -159,26 +143,6 @@ function ListPesanan(){
                                                             ))}
                                                         </TableBody>
                                                     </Table>
-                                                    <DialogFooter>
-                                                        <DialogClose asChild>
-                                                        <Button variant="outline" className="text-white !bg-red-700">Cancel</Button>
-                                                        </DialogClose>
-                                                        <AlertDialog>
-                                                            <AlertDialogTrigger className="h-9 flex items-center !text-white !bg-blue-700">Complete Step</AlertDialogTrigger>
-                                                            <AlertDialogContent>
-                                                                <AlertDialogHeader>
-                                                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                                    <AlertDialogDescription>
-                                                                        By continuing, you confirm that the order has been packed and ready for shipment.
-                                                                    </AlertDialogDescription>
-                                                                </AlertDialogHeader>
-                                                                <AlertDialogFooter>
-                                                                    <AlertDialogCancel className="!bg-red-700 !text-white">Cancel</AlertDialogCancel>
-                                                                    <AlertDialogAction className="!bg-green-500 !text-white" onClick={() => handleUpdateShipment(item.id, "On Delivery")}>Continue</AlertDialogAction>
-                                                                </AlertDialogFooter>
-                                                            </AlertDialogContent>
-                                                        </AlertDialog>
-                                                    </DialogFooter>
                                                 </DialogContent>
                                             </form>
                                         </Dialog>
@@ -189,10 +153,8 @@ function ListPesanan(){
                     </Table>
                 </div>
             </div>
-
         </div>
-
     )
 }
 
-export default ListPesanan
+export default OrderHistory;

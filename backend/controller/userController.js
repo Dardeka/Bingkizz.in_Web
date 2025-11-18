@@ -69,3 +69,17 @@ export const getUser = async (req, res) => {
         console.log({error: error.message})
     }
 }
+
+export const updateUser = async (req, res) => {
+    try {
+        const { userId, name, address, phoneNum } = req.body;
+        const image = req.file ? `/images/${req.file.filename}` : ''
+        console.log('This is the image : ', image)
+        const targetUser = await User.findByIdAndUpdate(userId, {name: name, address: address, phoneNum: phoneNum, profilePic: image})
+
+        console.log("This is the user update: ",targetUser)
+        return res.json({ message: 'User updated successfully', data: targetUser });
+    } catch (error) {
+        console.log({error: error.message})
+    }
+}   

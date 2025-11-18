@@ -33,17 +33,17 @@ export const addOrder = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
-        const {orderID, targetStatus, status} = req.body;
-        console.log("Ini order ID : ", orderID)
+        const {orderId, targetStatus, status} = req.body;
+        console.log("Ini order ID : ", orderId)
         console.log("Ini status : ", status)
         
         if(targetStatus == "Payment"){
-            const updateStatus = await Order.findByIdAndUpdate(orderID, {paymentStatus: status, shippingStatus: "Processing Order"}, {new: true})
+            const updateStatus = await Order.findByIdAndUpdate(orderId, {paymentStatus: status, shippingStatus: "Processing Order"}, {new: true})
         }else if(targetStatus == "Shipment"){
-            const updateStatus = await Order.findByIdAndUpdate(orderID, {shippingStatus: status}, {new: true})
+            const updateStatus = await Order.findByIdAndUpdate(orderId, {shippingStatus: status}, {new: true})
         }
 
-        const orderNow = await Order.findById(orderID)
+        const orderNow = await Order.findById(orderId)
         res.status(200).json(orderNow)
     } catch (error) {
         res.status(500).json({error: error.message})

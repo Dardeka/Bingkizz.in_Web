@@ -5,7 +5,7 @@ import Products from "./components/products"
 
 function BingkizzinWeb(){
     return(
-        <div className="flex flex-col w-full min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat">
+        <div className="flex flex-col w-screen min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat font-montserrat">
             <Header/>
             <main className="flex-grow">
                 <HeroSection/>

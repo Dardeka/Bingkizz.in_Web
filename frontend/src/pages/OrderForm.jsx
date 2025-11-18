@@ -229,7 +229,7 @@ function OrderForm() {
           headers: {
             'Content-Type': 'application/json',},
           body: JSON.stringify({
-            orderID: orderData.orderId,
+            orderId: orderData.orderID,
             targetStatus: "Payment",
             status: "Paid"
           })

@@ -14,6 +14,8 @@ import PesananDikirim from "../pages/Admin/AdminPesanan/pesanan-dikirim";
 import PesananSelesai from "../pages/Admin/AdminPesanan/pesanan-selesai";
 import Complain from "../pages/Admin/AdminPesanan/complain";
 import OrderForm from "../pages/OrderForm";
+import ProfilePage from "../pages/profilePage";
+import OrderHistory from "../pages/orderHistory";
 
 function AppRouter() {
   return (
@@ -28,6 +30,8 @@ function AppRouter() {
         <Route path="/cart" element={<CheckoutPage/>}/>
         <Route path="/order-form" element={<OrderForm/>}/>
         <Route path="/ProductPage" element={<ProductPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/order-history" element={<OrderHistory />} />
         
         {/* Admin */}
         <Route path="/admin" element={<DashboardAdmin/>}/>

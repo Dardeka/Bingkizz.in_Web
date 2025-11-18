@@ -24,7 +24,7 @@ function HeaderAdmin(){
     return(
         <div>
             {/* Header Section */}
-            <div className="fixed flex top-0 left-0 w-full h-[90px] pl-10 pr-10 bg-[#9f152f] shadow-2xl z-10">
+            <div className="fixed flex top-0 left-0 w-full h-[90px] pl-10 pr-10 bg-[#9f152f] shadow-2xl z-10 font-montserrat">
                 <img src="/logo/white_logoTeksOnly.png" alt="" width="200px" className="mt-auto mb-auto" onClick={() => {handleAdminHome()}}/>
                 <div className="flex mt-auto mb-auto ml-auto w-[650px] justify-evenly">
                     <Button className="!bg-transparent !text-white hover:!decoration-underline" onClick={() => handleAdminHome()} >Home</Button>

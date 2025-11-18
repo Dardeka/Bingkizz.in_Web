@@ -150,7 +150,7 @@ function CheckoutPage() {
   if (error) return <div className="text-center pt-32 text-red-500">Error: {error}</div>;
 
   return (
-    <div className="flex flex-col w-screen min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat">
+    <div className="flex flex-col w-screen min-h-screen bg-[url(/images/Background.png)] bg-cover bg-no-repeat font-montserrat">
       <Header />
       <div className="">
         <p className="mt-30 text-2xl font-bold underline underline-offset-1">

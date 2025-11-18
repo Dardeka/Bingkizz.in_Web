@@ -10,7 +10,7 @@ import Autoplay from "embla-carousel-autoplay"
 
 function HeroSection(){
     return(
-        <div id="HERO" className="flex mt-22 content-center w-full">
+        <div id="HERO" className="flex mt-22 content-center w-screen">
             <Carousel plugins={[
                 Autoplay({
                     delay: 3000,
