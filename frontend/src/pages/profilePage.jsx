@@ -271,7 +271,7 @@ function ProfilePage() {
                                 </Button>
                             </DialogClose>
                             {/* Tombol submit Formik */}
-                            <Button type="submit" className="!bg-[#F4476D] cursor-pointer hover:!bg-[#D1345B] hover:shadow-xl/10">
+                            <Button type="submit" className="!bg-[#F4476D] cursor-pointer hover:!bg-[#D1345B] hover:shadow-xl/10" onClick={() => {navigate('/profile')}}>
                                 Save Info
                             </Button>
                             </DialogFooter>
