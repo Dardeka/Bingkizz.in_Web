@@ -50,19 +50,19 @@ app.get("/", (req, res) => {
 });
 
 // User Route
-app.use("/api", userRoute)
+app.use("/", userRoute)
 
 // Product Route
-app.use("/api/product", productRoute)
+app.use("/product", productRoute)
 
 // Cart Route
-app.use("/api/cart", cartRoute)
+app.use("/cart", cartRoute)
 
 // Checkout Route
-app.use('/api/checkout', checkoutRouter)
+app.use('/checkout', checkoutRouter)
 
 // Order Route
-app.use("/api/admin/order", orderRoute)
+app.use("/admin/order", orderRoute)
 
 // Ekspor handler utama (wajib untuk serverless)
 export const handler = serverless(app);
