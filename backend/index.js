@@ -21,12 +21,7 @@ app.use('/images', express.static('public/images'));
 const PORT = process.env.PORT || 3000;
 const MONGOURL = process.env.MONGO_URL;
 
-mongoose.connect(MONGOURL).then(() => {
-    console.log("Database is connected")
-    app.listen(PORT, () => {
-        console.log(`Server is running in port ${PORT}`)
-    })
-}).catch((error) => console.log("Database connection failed : ",error));
+mongoose.connect(MONGOURL)
 
 // User Route
 app.use("/api", userRoute)
@@ -44,4 +39,4 @@ app.use('/api/checkout', checkoutRouter)
 app.use("/api/admin/order", orderRoute)
 
 // // export default app
-// export const handler = serverless(app)
+export const handler = serverless(app)
