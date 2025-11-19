@@ -43,6 +43,8 @@ const connectDB = async () => {
     }
 };
 
+await connectDB()
+
 app.get("/", (req, res) => {
     res.send("Serverless API Running");
 });
