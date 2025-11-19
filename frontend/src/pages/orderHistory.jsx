@@ -50,7 +50,7 @@ function OrderHistory() {
 
         const fetchOrderData = async () => {
             try {
-                const response = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/admin/order/showOrders');
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/showOrders`);
 
                 if(!response.ok){
                     return res.status(500).json('Failed to fetch order data');

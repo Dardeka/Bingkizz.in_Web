@@ -27,7 +27,7 @@ function RegistPage() {
     })
 
     const submit = (data) => {
-        axios.post("${import.meta.env.VITE_BACKEND_URL}/api/register", data).then((response) => {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/register`, data).then((response) => {
             console.log(response.data);
             if(response.data == "SUCCESS"){
                 alert("Thank You for Register!\n Let's Login to Your Account")
