@@ -24,7 +24,7 @@ checkoutRouter.post("/", async (req, res) => {
                 email: req.body.email,
             },
             callbacks: {
-                finish: "http://localhost:5173/",
+                finish: 'https://bingkizzin.vercel.app/',
             },
         };
 
