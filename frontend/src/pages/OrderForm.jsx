@@ -75,7 +75,7 @@ function OrderForm() {
         if (!payload || !payload.id) {
           throw new Error('Invalid token payload');
         }
-        const response = await fetch(`http://localhost:3001/api/${payload.id}`,{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${payload.id}`,{
           method: 'GET',
           headers: {accessToken: token}
         });
@@ -120,7 +120,7 @@ function OrderForm() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3001/api/cart/delete`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +174,7 @@ function OrderForm() {
       }
 
       // Ini kirim initial data ke database order
-      const res = await fetch('http://localhost:3001/api/admin/order/addOrder', {
+      const res = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/admin/order/addOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ function OrderForm() {
       console.log("Order created successfully:", orderData);
 
       // Ini mulai midtrans
-      const response = await fetch('http://localhost:3001/api/checkout/', {
+      const response = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/checkout/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -224,7 +224,7 @@ function OrderForm() {
       onSuccess: async function (result) {
         console.log("Payment success:", result);
 
-        const updateCart = await fetch('http://localhost:3001/api/admin/order/updateOrder', {
+        const updateCart = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',},

@@ -108,7 +108,7 @@ function CheckoutPage() {
         }
 
         console.log("User ID untuk cart:", userId);
-        const response = await fetch(`http://localhost:3001/api/cart/show-cart/${userId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart/show-cart/${userId}`, {
           method: "GET",
           headers: { accessToken: userToken },
         });
@@ -179,7 +179,7 @@ function CheckoutPage() {
                         {/* console.log(`Checkbox ${isChecked ? "checked" : "unchecked"} for item ID: ${item.id}`) */}
                       <div className="w-[399px] bg-[#D9D9D9] flex p-5 items-center rounded-[12px]">
                         <img
-                          src={`http://localhost:3001${item.Product.productImg}`}
+                          src={`${import.meta.env.VITE_BACKEND_URL}${item.Product.productImg}`}
                           alt={item.Product.productName}
                           width="100px"
                         />

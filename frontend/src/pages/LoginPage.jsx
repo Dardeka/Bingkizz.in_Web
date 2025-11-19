@@ -33,7 +33,7 @@ function LoginPage(){
     })
 
     const submit = (data) => {
-        axios.post("http://localhost:3001/api/login", data).then((response) => {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, data).then((response) => {
             if(response.data.error){
                 alert(response.data.error);
             }else{
@@ -76,7 +76,7 @@ function LoginPage(){
                                             const googleToken = credentialResponse.credential;
 
                                             console.log(credentialResponse);
-                                            axios.post("http://localhost:3001/auth/google", {token: googleToken}).then((response) => {
+                                            axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/google`, {token: googleToken}).then((response) => {
                                                 if (response.data && response.data.accessToken) {
                                                     sessionStorage.setItem("accessToken", response.data.accessToken);
                                                     handleDashboard();
