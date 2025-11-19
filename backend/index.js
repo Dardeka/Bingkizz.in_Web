@@ -64,7 +64,6 @@ app.use('/api/checkout', checkoutRouter)
 // Order Route
 app.use("/api/admin/order", orderRoute)
 
-// export default app
 // Ekspor handler utama (wajib untuk serverless)
 export const handler = serverless(app);
 
