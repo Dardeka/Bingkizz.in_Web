@@ -105,8 +105,7 @@ export const deleteCart = async (req, res) => {
 
     console.log("Produk ditemukan:", req.body.items);
     for (const item in req.body.items){
-        const updateCart = await 
-        // (req.body.items[item].productId)
+        const updateCart = await (req.body.items[item].productId)
         console.log("Produk adalah :", updateCart);
     }
 

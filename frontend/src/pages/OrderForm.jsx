@@ -235,14 +235,14 @@ function OrderForm() {
           })
         });
         const updateData = await updateCart.json();
-        // const deleteSuccess = await handleDeleteCart(userToken);
-        // if (deleteSuccess) {
-        //   alert("Pembayaran berhasil dan keranjang dikosongkan.");
-        //   navigate('/');
-        // }else{
-          // alert("Pembayaran berhasil tetapi gagal mengosongkan keranjang. Silahkan hubungi admin.");
-        //   navigate('/');
-        // }
+        const deleteSuccess = await handleDeleteCart(userToken);
+        if (deleteSuccess) {
+          alert("Pembayaran berhasil dan keranjang dikosongkan.");
+          navigate('/');
+        }else{
+          alert("Pembayaran berhasil tetapi gagal mengosongkan keranjang. Silahkan hubungi admin.");
+          navigate('/');
+        }
       },
       onPending: function (result) {
         console.log("Payment pending:", result);
