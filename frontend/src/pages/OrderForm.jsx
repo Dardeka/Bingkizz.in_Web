@@ -174,7 +174,7 @@ function OrderForm() {
       }
 
       // Ini kirim initial data ke database order
-      const res = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/admin/order/addOrder', {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/addOrder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -199,7 +199,7 @@ function OrderForm() {
       console.log("Order created successfully:", orderData);
 
       // Ini mulai midtrans
-      const response = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/checkout/', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/checkout/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -224,7 +224,7 @@ function OrderForm() {
       onSuccess: async function (result) {
         console.log("Payment success:", result);
 
-        const updateCart = await fetch('${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder', {
+        const updateCart = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',},

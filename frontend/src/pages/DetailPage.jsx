@@ -136,7 +136,7 @@ function DetailPage(){
         <div className="flex flex-col w-screen min-h-screen bg-[#F1DFE4] bg-cover bg-no-repeat font-montserrat">
             <Header/>
             <div className="flex flex-row w-[1196px] h-[495px] mt-30 ml-auto mr-auto p-5 mb-[110px]">
-                <img src={`${import.meta.env.VITE_BACKEND_URL}${product.productImg}`} alt="" width="413px" height="313px" />
+                <img src={`${product.productImg}`} alt="" width="413px" height="313px" />
                 <div className="flex flex-col text-black ml-[80px] w-full mr-[45px]">
                     <div className="flex flex-col items-start">
                         <p className="text-2xl text-left font-bold">{product.productName}</p>

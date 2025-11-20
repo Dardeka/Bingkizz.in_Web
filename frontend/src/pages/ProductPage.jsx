@@ -60,7 +60,7 @@ function ProductPage(){
                     {products.map(product => (
                         <div key={product.id} className="w-[250px] h-auto py-5 bg-white border border-[#e03636] flex flex-col items-center justify-center rounded-[10px]">
                             <div className="w-[200px] h-[200px] bg-gray-400 rounded-lg">
-                                <img src={`${import.meta.env.VITE_BACKEND_URL}${product.image}`} alt={product.name} className="w-full h-full object-cover rounded-lg" />
+                                <img src={`${product.image}`} alt={product.name} className="w-full h-full object-cover rounded-lg" />
                             </div>
                             <div className="mt-[15px] text-lg font-bold text-[#e03636]">{product.name}</div>
                             <button className="!w-[200px] h-10 mt-[10px] !bg-[#e03636] border-none rounded-[8px] text-white cursor-pointer hover:!bg-[#f16363]" onClick={() => handleSeeDetail(product.id)}>See Detail</button>

@@ -21,8 +21,6 @@ app.use('/images', express.static('public/images'));
 const PORT = process.env.PORT || 3000;
 const MONGOURL = process.env.MONGO_URL;
 
-// mongoose.connect(MONGOURL)
-
 // mongoose.connect(MONGOURL).then(() => {
 //     console.log("Database is connected")
 //     app.listen(PORT, () => {

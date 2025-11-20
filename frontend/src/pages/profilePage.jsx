@@ -159,7 +159,7 @@ function ProfilePage() {
                 </div>
                 {userData.map((user) => (
                     <div className="flex flex-col mt-[30px] ml-[50px] gap-[20px]" key={user.username}>
-                        <img src={`${import.meta.env.VITE_BACKEND_URL}${user.profilePic}`} alt={user.profilePic} width="120px" height="120px" className="rounded-full"/>
+                        <img src={`${user.profilePic}`} alt={user.profilePic} width="120px" height="120px" className="rounded-full"/>
                         <div className="w-[500px] flex flex-col mt-[30px] text-left gap-[15px]">
                             <div className="flex flex-row gap-[73px]">
                                 <b>Username :</b>

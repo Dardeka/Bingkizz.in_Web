@@ -179,7 +179,7 @@ function CheckoutPage() {
                         {/* console.log(`Checkbox ${isChecked ? "checked" : "unchecked"} for item ID: ${item.id}`) */}
                       <div className="w-[399px] bg-[#D9D9D9] flex p-5 items-center rounded-[12px]">
                         <img
-                          src={`${import.meta.env.VITE_BACKEND_URL}${item.Product.productImg}`}
+                          src={`${item.Product.productImg}`}
                           alt={item.Product.productName}
                           width="100px"
                         />
