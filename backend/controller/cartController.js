@@ -78,7 +78,7 @@ export const showCart = async (req, res) => {
                 id: uniqueId,
                 quantity: item.quantity,
                 Product: {
-                    _id: item.productId._id,
+                    // _id: item.productId._id,
                     productName: item.productId.productName,
                     productPrice: item.productId.productPrice,
                     productImg: item.productId.productImg,
@@ -90,7 +90,7 @@ export const showCart = async (req, res) => {
     res.json(formattedCart);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch cart" });
+    res.status(500).json({ error: err.message });
   }
 }
 
