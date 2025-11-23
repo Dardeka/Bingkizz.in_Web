@@ -11,6 +11,7 @@ function DetailPage(){
 
 
     const [product, setProduct] = useState(null);
+    const [allProducts, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [quantity, setQuantity] = useState(0);
@@ -19,7 +20,7 @@ function DetailPage(){
     useEffect(() => {
         if (!id) return;
 
-        const fetchProductDetail = async () => {
+        const fetchCertainProductDetail = async () => {
             setLoading(true);
             setError(null);
             try {
@@ -42,8 +43,26 @@ function DetailPage(){
             }
         };
 
-        fetchProductDetail();
+        fetchCertainProductDetail();
     }, [id]); 
+
+    useEffect(() => {
+        const fetchAllProducts = async () => {
+            try {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/product/show-products`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch products: ${response.statusText}`);
+                }
+                const data = await response.json();
+                console.log(data);
+                setAllProducts(data);
+            } catch (error) {
+                console.log({error: error.message} );
+            }
+        }
+
+        fetchAllProducts();
+    }, []);
 
     // Handle add cart
     const handleAddToCart = async () => {
@@ -135,7 +154,7 @@ function DetailPage(){
     return(
         <div className="flex flex-col w-screen min-h-screen bg-[#F1DFE4] bg-cover bg-no-repeat font-montserrat">
             <Header/>
-            <div className="flex flex-row w-[1196px] h-[495px] mt-30 ml-auto mr-auto p-5 mb-[110px]">
+            <div className="flex flex-row w-[1196px] h-[495px] mt-30 ml-auto mr-auto p-5 mb-[30px]">
                 <img src={`${product.productImg}`} alt="" width="413px" height="313px" />
                 <div className="flex flex-col text-black ml-[80px] w-full mr-[45px]">
                     <div className="flex flex-col items-start">
@@ -145,15 +164,50 @@ function DetailPage(){
                         <p className="text-xl mt-[27px]"><b>Tersedia :</b> {product.productStock}</p>
                     </div>
                     <div className="flex flex-row justify-between items-center mt-[29px]">
-                        <div className="flex flex-row w-[150px] h-[40px] bg-[#B87B7B] items-center justify-between rounded-[6px] items-start">
+                        <div className="flex flex-row w-[150px] h-[40px] bg-[#B87B7B] items-center justify-between rounded-[6px] items-start shadow-lg/20">
                             <Button className="!bg-transparent" onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>-</Button>
                             <p className="text-black bg-white w-[50px] h-[40px] content-center">{quantity}</p>
                             <Button className="!bg-transparent" onClick={() => handleQuantityChange(1)}>+</Button>
                         </div>
                         <div className="flex justify-end">
-                            <Button className="!bg-[#00FF62] !text-black w-[180px] font-bold" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Add to Cart</Button>
+                            <Button className="!bg-[#00FF62] !text-black w-[180px] font-bold shadow-xl/10 hover:shadow-xl/30" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Tambah ke Keranjang</Button>
                         </div>
                     </div>
+                </div>
+            </div>
+            {/* Review Section */}
+            <div className="flex flex-row mt-[15px] ml-[60px] mb-[40px]">
+                <div className="w-[175px] flex flex-col items-start">
+                    <img src="/Icons/quote.png" alt="" width="80px" />
+                    <br />
+                    <h1 className="text-left font-semibold ml-[10px]">Apa pendapat mereka mengenai produk kami?</h1>
+                </div>
+                <div className="flex flex-col justify-between w-[250px] h-[350px] ml-[51px] mt-[20px] mb-[40px] bg-white p-5 text-left rounded-[12px] shadow-xl/40">
+                    <p>" hampersnya sesuai sama yang di foto, hiasannya juga cantik bgt, cocok buat yg mau ngasih surprise "</p>
+                    <div className="flex flex-row justify-between items-center">
+                        <h2 className="font-semibold">p*****3</h2>
+                        <img src="/Icons/shopee-icon.png" alt="" width="30px" height="30px"/>
+                    </div>
+                </div>
+            </div>
+            {/* Other products */}
+            <div className="ml-[60px]">
+                <h1 className="text-left font-semibold">Produk lainnya dari Bingkizz.In :</h1>
+                <br />
+                <div className="flex flex-row gap-5">
+                    {/* Card */}
+                    {allProducts.filter(prod => prod._id != product._id).map((prod) => (
+                    <div key={prod.id} className="w-[250px] bg-white p-5 rounded-[12px] shadow-xl/30">
+                        <img src={prod.productImg} alt={prod.productName} width="200px" height="200px" />
+                        <br />
+                        <h3>{prod.productName}</h3>
+                        <br />
+                        <div className="flex flex-row gap-5 items-center justify-between">
+                            <p>Rp {prod.productPrice}</p>
+                            <Button className="!bg-[#e03636] !text-white w-[100px] font-bold">Lihat Detail</Button>
+                        </div>
+                    </div>
+                    ))}
                 </div>
             </div>
             <Footer/>

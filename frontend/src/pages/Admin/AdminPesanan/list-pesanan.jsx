@@ -97,6 +97,8 @@ function ListPesanan(){
             }
             const updatedOrder = await response.json();
             console.log('Order status updated:', updatedOrder);
+
+            navigate('/admin/pesanan-dikirim');
         } catch (error) {
             console.error('Error updating order status:', error);
         }
@@ -112,14 +114,14 @@ function ListPesanan(){
                 </div>
                 <div>
                     <Table>
-                        <TableHeader className="border-b-2 border-solid border-black-700">
+                        <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f]">
                             <TableRow>
-                                <TableHead className="text-center w-[16%]">Order ID</TableHead>
-                                <TableHead className="text-center w-[16%]">Nama penerima</TableHead>
-                                <TableHead className="text-center w-[16%]">Grand Total</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pembayaran</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pengiriman</TableHead>
-                                <TableHead className="text-center w-[16%]">Detail Pesanan</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Order ID</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Nama penerima</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Grand Total</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Status Pembayaran</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Status Pengiriman</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Detail Pesanan</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -136,7 +138,7 @@ function ListPesanan(){
                                                 <DialogTrigger asChild>
                                                     <Button variant="outline" className="shadow-xl">Detail</Button>
                                                 </DialogTrigger>
-                                                <DialogContent className="sm:max-w-[425px]">
+                                                <DialogContent className="sm:w-auto">
                                                     <DialogHeader>
                                                         <DialogTitle>Order Detail</DialogTitle>
                                                         <DialogDescription>
@@ -146,14 +148,14 @@ function ListPesanan(){
                                                     <Table>
                                                         <TableHeader className="border-b-2 border-solid border-black-700">
                                                             <TableRow>
-                                                                <TableHead className="text-center w-[50%]">Product Name</TableHead>
+                                                                <TableHead className="text-left w-[50%]">Product Name</TableHead>
                                                                 <TableHead className="text-center w-[50%]">Quantity</TableHead>
                                                             </TableRow>
                                                         </TableHeader>
                                                         <TableBody>
                                                             {item.items && item.items.map((prod, index) => (
                                                                 <TableRow key={index}>
-                                                                    <TableCell className="text-left pl-[40px] w-[50%]">{prod.productName}</TableCell>
+                                                                    <TableCell className="text-left w-[50%]">{prod.productName}</TableCell>
                                                                     <TableCell className="text-center w-[50%]">{prod.quantity}</TableCell>
                                                                 </TableRow>
                                                             ))}
@@ -161,10 +163,10 @@ function ListPesanan(){
                                                     </Table>
                                                     <DialogFooter>
                                                         <DialogClose asChild>
-                                                        <Button variant="outline" className="text-white !bg-red-700">Cancel</Button>
+                                                            <Button variant="outline" className="text-white !bg-red-700">Cancel</Button>
                                                         </DialogClose>
                                                         <AlertDialog>
-                                                            <AlertDialogTrigger className="h-9 flex items-center !text-white !bg-blue-700">Complete Step</AlertDialogTrigger>
+                                                            <AlertDialogTrigger className="pl-2 pr-2 rounded-[8px] flex items-center font-semibold text-sm !text-white !bg-blue-700">Complete Step</AlertDialogTrigger>
                                                             <AlertDialogContent>
                                                                 <AlertDialogHeader>
                                                                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>

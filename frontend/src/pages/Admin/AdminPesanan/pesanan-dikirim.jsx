@@ -66,14 +66,14 @@ function PesananDikirim(){
                 </div>
                 <div>
                     <Table>
-                        <TableHeader className="border-b-2 border-solid border-black-700">
+                        <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f]">
                             <TableRow>
-                                <TableHead className="text-center w-[16%]">Order ID</TableHead>
-                                <TableHead className="text-center w-[16%]">Nama penerima</TableHead>
-                                <TableHead className="text-center w-[16%]">Grand Total</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pembayaran</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pengiriman</TableHead>
-                                <TableHead className="text-center w-[16%]">Detail Pengiriman</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Order ID</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Nama penerima</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Grand Total</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Status Pembayaran</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Status Pengiriman</TableHead>
+                                <TableHead className="text-center w-[16%] text-white">Detail Pengiriman</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>

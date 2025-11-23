@@ -67,25 +67,23 @@ function KonfirmasiPembayaran(){
                 </div>
                 <div className="">
                     <Table>
-                        <TableHeader className="border-b-2 border-solid border-black-700">
+                        <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f]">
                             <TableRow>
-                                <TableHead className="text-center w-[16%]">Order ID</TableHead>
-                                <TableHead className="text-center w-[16%]">Nama penerima</TableHead>
-                                <TableHead className="text-center w-[16%]">Grand Total</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pembayaran</TableHead>
-                                <TableHead className="text-center w-[16%]">Status Pengiriman</TableHead>
-                                <TableHead className="text-center w-[16%]">Detail Pesanan</TableHead>
+                                <TableHead className="text-center w-[20%] text-white">Order ID</TableHead>
+                                <TableHead className="text-center w-[20%] text-white">Nama penerima</TableHead>
+                                <TableHead className="text-center w-[20%] text-white">Grand Total</TableHead>
+                                <TableHead className="text-center w-[20%] text-white">Status Pembayaran</TableHead>
+                                <TableHead className="text-center w-[20%] text-white">Status Pengiriman</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {orders.filter((item) => item.paymentStatus === "Pending").map((item) => (
-                                <TableRow key={item.id}>
-                                    <TableCell className="w-[16%]">{item.id}</TableCell>
-                                    <TableCell className="w-[16%]">{item.receiverName}</TableCell>
-                                    <TableCell className="w-[16%]">{item.grandTotal}</TableCell>
-                                    <TableCell className="w-[16%]">{item.paymentStatus}</TableCell>
-                                    <TableCell className="w-[16%]">{item.shippingStatus}</TableCell>
-                                    <TableCell className="w-[16%]"><Button>Detail</Button></TableCell>
+                            {orders.filter((item) => item.paymentStatus === "Pending" || item.paymentStatus === "Cancelled").map((item) => (
+                                <TableRow key={item.id} className="h-[60px] hover:bg-gray-100">
+                                    <TableCell className="w-[20%]">{item.id}</TableCell>
+                                    <TableCell className="w-[20%]">{item.receiverName}</TableCell>
+                                    <TableCell className="w-[20%]">{item.grandTotal}</TableCell>
+                                    <TableCell className={`w-[20%]  ${item.paymentStatus === "Pending" ? "bg-yellow-500 font-semibold" : "bg-red-500 font-semibold text-white"}`}>{item.paymentStatus}</TableCell>
+                                    <TableCell className="w-[20%]">{item.shippingStatus}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

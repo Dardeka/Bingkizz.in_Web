@@ -21,6 +21,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+
+import {Formik, Form, Field, ErrorMessage} from "formik";
 import { useNavigate } from "react-router-dom";
 
 function OrderHistory() {
@@ -80,6 +82,12 @@ function OrderHistory() {
         fetchOrderData();
     }, []);
 
+    const submitReview = (values) => {
+        console.log("Review submitted: ", values);
+        alert("Review submitted: " + values.review);
+        navigate("/order-history");
+    }
+
     const handleProfile = () => {
         navigate("/profile");
     }
@@ -116,35 +124,64 @@ function OrderHistory() {
                                     <TableCell className="w-[16%]">{item.shippingStatus}</TableCell>
                                     <TableCell className="w-[16%]">
                                         <Dialog>
-                                            <form>
-                                                <DialogTrigger asChild>
-                                                    <Button variant="outline">Detail</Button>
-                                                </DialogTrigger>
-                                                <DialogContent className="sm:max-w-[425px]">
-                                                    <DialogHeader>
-                                                        <DialogTitle>Order Detail</DialogTitle>
-                                                        <DialogDescription>
-                                                            These are the details for order ID: {item.id}
-                                                        </DialogDescription>
-                                                    </DialogHeader>
-                                                    <Table>
-                                                        <TableHeader className="border-b-2 border-solid border-black-700">
-                                                            <TableRow>
-                                                                <TableHead className="text-center w-[50%]">Product Name</TableHead>
-                                                                <TableHead className="text-center w-[50%]">Quantity</TableHead>
+                                            <DialogTrigger asChild>
+                                                <Button variant="outline">Detail</Button>
+                                            </DialogTrigger>
+                                            <DialogContent className="sm:max-w-[600px]">
+                                                <DialogHeader>
+                                                    <DialogTitle>Order Detail</DialogTitle>
+                                                    <DialogDescription>
+                                                        These are the details for order ID: {item.id}
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <Table>
+                                                    <TableHeader className="border-b-2 border-solid border-black-700">
+                                                        <TableRow>
+                                                            <TableHead className="text-center w-[33%]">Product Name</TableHead>
+                                                            <TableHead className="text-center w-[33%]">Quantity</TableHead>
+                                                            <TableHead className="text-center w-[33%]">Review</TableHead>
+                                                        </TableRow>
+                                                    </TableHeader>
+                                                    <TableBody>
+                                                        {item.items && item.items.map((prod, index) => (
+                                                            <TableRow key={index}>
+                                                                <TableCell className="text-left w-[33%]">{prod.productName}</TableCell>
+                                                                <TableCell className="text-center w-[33%]">{prod.quantity}</TableCell>
+                                                                <TableCell className="text-center w-[33%]">
+                                                                    <Dialog>
+                                                                        <DialogTrigger asChild>
+                                                                            <Button variant="outline">Give Review</Button>
+                                                                        </DialogTrigger>
+                                                                        <DialogContent className="sm:max-w-[700px]">
+                                                                            <Formik>
+                                                                                <Form 
+                                                                                initialValues={{ review: '' }}
+                                                                                onSubmit={submitReview}
+                                                                                >
+                                                                                    <DialogHeader>
+                                                                                        <DialogTitle>Review</DialogTitle>
+                                                                                        <DialogDescription>
+                                                                                            Leave a review for : {prod.productName}
+                                                                                        </DialogDescription>
+                                                                                        <Field as="textarea" name="review" placeholder="Write your review here..." className="w-full h-[150px] mt-[20px] mb-[20px] p-2 border-2 border-black/10 rounded-md resize-none"/>
+                                                                                        <ErrorMessage name="review" component="div" className="text-red-500 mt-2"/>
+                                                                                    </DialogHeader>
+                                                                                    <DialogFooter>
+                                                                                        <DialogClose asChild>
+                                                                                            <Button variant="outline" className="text-white !bg-red-700">Cancel</Button>
+                                                                                        </DialogClose>
+                                                                                        <Button className="!bg-green-500 text-white" type="submit">Submit Review</Button>
+                                                                                    </DialogFooter>
+                                                                                </Form>
+                                                                            </Formik>
+                                                                        </DialogContent>
+                                                                    </Dialog>
+                                                                </TableCell>
                                                             </TableRow>
-                                                        </TableHeader>
-                                                        <TableBody>
-                                                            {item.items && item.items.map((prod, index) => (
-                                                                <TableRow key={index}>
-                                                                    <TableCell className="text-left pl-[40px] w-[50%]">{prod.productName}</TableCell>
-                                                                    <TableCell className="text-center w-[50%]">{prod.quantity}</TableCell>
-                                                                </TableRow>
-                                                            ))}
-                                                        </TableBody>
-                                                    </Table>
-                                                </DialogContent>
-                                            </form>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </DialogContent>
                                         </Dialog>
                                     </TableCell>
                                 </TableRow>

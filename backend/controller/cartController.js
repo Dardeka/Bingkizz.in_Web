@@ -29,7 +29,7 @@ export const createCart = async (req, res) => {
                 return res.status(404).json({message: "Product not found in database"})
             }
 
-            console.log("Product found! :", targetProduct)
+            // console.log("Product found! :", targetProduct)
 
             const existItem = cart.cartItems.find(
                 (prod) => prod.productId.toString() === productId
@@ -64,7 +64,6 @@ export const showCart = async (req, res) => {
   try {
     // const result = await Cart.find()
     const cart = await Cart.findOne({userId}).populate("cartItems.productId");
-    // console.log("Isi param : ", req.params)
 
     if (!cart) return res.json({ message: "Cart not found" });
 
@@ -78,7 +77,7 @@ export const showCart = async (req, res) => {
                 id: uniqueId,
                 quantity: item.quantity,
                 Product: {
-                    // _id: item.productId._id,
+                    _id: item.productId._id,
                     productName: item.productId.productName,
                     productPrice: item.productId.productPrice,
                     productImg: item.productId.productImg,
@@ -101,7 +100,7 @@ export const deleteCart = async (req, res) => {
       return res.status(401).json({ error: "Token invalid, please login again." });
     }
     console.log("Isi request : ", req.body);
-    const cart = await Cart.findOne({userId: req.body.userId});
+    const cart = await Cart.findOne({userId: req.user.id});
 
     console.log("Produk ditemukan:", req.body.items);
     for (const item in req.body.items){

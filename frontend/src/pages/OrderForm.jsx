@@ -185,7 +185,8 @@ function OrderForm() {
           address: values.address,
           phoneNum: values.phoneNum,
           items: listItems,
-          grandTotal: values.grandTotal
+          grandTotal: values.grandTotal,
+          createdAt: new Date()
         })
       });
 
@@ -252,7 +253,18 @@ function OrderForm() {
         console.log("Payment error:", result);
         alert("Terjadi kesalahan pada pembayaran!");
       },
-      onClose: function () {
+      onClose: async function () {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',},
+          body: JSON.stringify({
+            orderId: orderData.orderID,
+            targetStatus: "Canceled",
+            status: "Cancelled"
+          })
+        });
+        console.log("Payment Cancelled")
         alert("Popup ditutup tanpa menyelesaikan pembayaran");
       },
       });
