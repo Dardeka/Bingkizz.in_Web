@@ -43,6 +43,8 @@ export const login = async (req, res) => {
             return res.json({error: "User not found! Please do registration first!"})
         }
 
+        console.log("The user is : ", targetUser)
+
         bcrypt.compare(password, targetUser.password).then((match) => {
             if(!match) {
                 return res.json({error: "Wrong username and password combination"})
@@ -52,7 +54,7 @@ export const login = async (req, res) => {
                 {username: targetUser.username, id: targetUser._id},
                 "importantsecret"
             )
-            return res.json(accessToken)
+            return res.json({token: accessToken, role : targetUser.role})
         })
     } catch (error) {
         return res.status(500).json({error: error.message})

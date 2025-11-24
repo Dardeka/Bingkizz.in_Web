@@ -60,31 +60,30 @@ function PesananSelesai(){
         <div>
             <HeaderAdmin/>
             <div className="px-10 w-screen  pt-32">
+                <h1 className="text-3xl font-bold mb-5">Daftar Pesanan - Pesanan Selesai</h1>
                 <div className="flex flex-row justify-between my-5">
                     <Button className="!bg-red-500 !text-white" onClick={handleBack}>Lihat Pesanan Dikirim</Button>
                     <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Complain</Button>
                 </div>
                 <div>
                     <Table>
-                        <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f]">
+                        <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f] rounded-t-[12px]">
                             <TableRow>
                                 <TableHead className="text-center w-[16%] text-white">Order ID</TableHead>
                                 <TableHead className="text-center w-[16%] text-white">Nama penerima</TableHead>
                                 <TableHead className="text-center w-[16%] text-white">Grand Total</TableHead>
                                 <TableHead className="text-center w-[16%] text-white">Status Pembayaran</TableHead>
                                 <TableHead className="text-center w-[16%] text-white">Status Pengiriman</TableHead>
-                                <TableHead className="text-center w-[16%] text-white">Detail Pesanan</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {orders.filter((item) => item.paymentStatus === "Success" && item.shippingStatus === "Delivered").map((item) => (
+                            {orders.filter((item) => item.shippingStatus === "Delivered").map((item) => (
                                 <TableRow key={item.id}>
                                     <TableCell className="w-[16%]">{item.id}</TableCell>
                                     <TableCell className="w-[16%]">{item.receiverName}</TableCell>
                                     <TableCell className="w-[16%]">{item.grandTotal}</TableCell>
                                     <TableCell className="w-[16%] bg-green-500 font-bold">{item.paymentStatus}</TableCell>
                                     <TableCell className="w-[16%] bg-green-500 font-bold">{item.shippingStatus}</TableCell>
-                                    <TableCell className="w-[16%]"><Button>Detail</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -108,6 +108,7 @@ function ListPesanan(){
         <div>
             <HeaderAdmin/>
             <div className="px-10 w-screen pt-32">
+                <h1 className="text-3xl font-bold mb-5">Daftar Pesanan - Pesanan Diproses</h1>
                 <div className="flex flex-row justify-between my-5">
                     <Button className="!bg-red-500 !text-white" onClick={handleBack}>Lihat Konfirmasi Pembayaran</Button>
                     <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Pesanan Dikirim</Button>

@@ -4,6 +4,7 @@ import Product from '../models/productModel.js'
 export const addOrder = async (req, res) => {
     try {
         const orderDetail = Order(req.body);
+        console.log(orderDetail)
 
         const listOrder = []
         for(const i of orderDetail.items){
@@ -21,11 +22,13 @@ export const addOrder = async (req, res) => {
             address: orderDetail.address,
             phoneNum: orderDetail.phoneNum,
             items: listOrder,
-            grandTotal: orderDetail.grandTotal
+            grandTotal: orderDetail.grandTotal,
+            createdAt: orderDetail.createdAt,
+            updatedAt: orderDetail.updatedAt
         })
 
         const addedOrder = await newOrder.save()
-        res.status(200).json({"newOrder": newOrder, "orderID": addedOrder._id})
+        res.status(200).json({"detailOrder": addedOrder, "newOrder": newOrder, "orderID": addedOrder._id})
     } catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -33,14 +36,16 @@ export const addOrder = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
-        const {orderId, targetStatus, status} = req.body;
+        const {orderId, targetStatus, status, updateTime} = req.body;
         console.log("Ini order ID : ", orderId)
         console.log("Ini status : ", status)
         
         if(targetStatus == "Payment"){
-            const updateStatus = await Order.findByIdAndUpdate(orderId, {paymentStatus: status, shippingStatus: "Processing Order"}, {new: true})
+            await Order.findByIdAndUpdate(orderId, {paymentStatus: status, shippingStatus: "Processing Order", updatedAt: updateTime}, {new: true})
         }else if(targetStatus == "Shipment"){
-            const updateStatus = await Order.findByIdAndUpdate(orderId, {shippingStatus: status}, {new: true})
+            await Order.findByIdAndUpdate(orderId, {shippingStatus: status, updatedAt: updateTime}, {new: true})
+        }else if(targetStatus == "Canceled"){
+            await Order.findByIdAndUpdate(orderId, {paymentStatus: "Cancelled", updatedAt: updateTime}, {new: true})
         }
 
         const orderNow = await Order.findById(orderId)

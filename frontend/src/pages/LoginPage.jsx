@@ -37,14 +37,13 @@ function LoginPage(){
             if(response.data.error){
                 alert(response.data.error);
             }else{
-                // console.log("ini adalah hasil : ",response.data)
-                // sessionStorage.setItem("accessToken", response.data)
-                sessionStorage.setItem("accessToken", response.data)
-                // sessionStorage.setItem("userId", response.data.id)
-                handleDashboard()
+                sessionStorage.setItem("accessToken", response.data.token)
+                if (response.data.role === 'Admin') {
+                    handleAdminDashboard();
+                }else{
+                    handleDashboard()
+                }
             }
-
-            // alert("Login Successfully! \n Discover more sweetness with Bingkizz.in!")
         });
     }
 

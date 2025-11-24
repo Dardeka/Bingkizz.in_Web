@@ -186,7 +186,8 @@ function OrderForm() {
           phoneNum: values.phoneNum,
           items: listItems,
           grandTotal: values.grandTotal,
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         })
       });
 
@@ -232,18 +233,19 @@ function OrderForm() {
           body: JSON.stringify({
             orderId: orderData.orderID,
             targetStatus: "Payment",
-            status: "Paid"
+            status: "Paid",
+            updatedAt: new Date()
           })
         });
         const updateData = await updateCart.json();
-        const deleteSuccess = await handleDeleteCart(userToken);
-        if (deleteSuccess) {
-          alert("Pembayaran berhasil dan keranjang dikosongkan.");
-          navigate('/');
-        }else{
-          alert("Pembayaran berhasil tetapi gagal mengosongkan keranjang. Silahkan hubungi admin.");
-          navigate('/');
-        }
+        // const deleteSuccess = await handleDeleteCart(userToken);
+        // if (deleteSuccess) {
+        //   alert("Pembayaran berhasil dan keranjang dikosongkan.");
+        //   navigate('/');
+        // }else{
+        //   alert("Pembayaran berhasil tetapi gagal mengosongkan keranjang. Silahkan hubungi admin.");
+        //   navigate('/');
+        // }
       },
       onPending: function (result) {
         console.log("Payment pending:", result);

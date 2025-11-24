@@ -17,6 +17,22 @@ const orderItemsSchema = new mongoose.Schema({
     },
 })
 
+const productReview = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
+    productName: {
+        type: String,
+        required: true,
+    },
+    productReview: {
+        type: String,
+        required: true,
+        default: ""
+    }
+})
+
 const orderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -49,6 +65,15 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: "Payment Verification"
+    },
+    itemsReview: [productReview],
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    updatedAt: {
+        type: Date,
+        required: true
     }
 })
 
