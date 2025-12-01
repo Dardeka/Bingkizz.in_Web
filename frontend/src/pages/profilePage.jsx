@@ -106,12 +106,20 @@ function ProfilePage() {
 
     const handleFileChange = (event) => {
         const file = event.currentTarget.files[0];
-        if(file){
-            const fileURL = URL.createObjectURL(file);
-            setProfilePicPreview(fileURL);
-            // console.log("This is the file: ", file);
-            setProfilePicture(file);
+        const limit = 2000
+        const size = file.size / 1024
+        if(size > limit){
+            alert("Ukuran file terlalu besar! Maksimal 2MB.")
+            return false
+        }else{
+            if(file){
+                const fileURL = URL.createObjectURL(file);
+                setProfilePicPreview(fileURL);
+                // console.log("This is the file: ", file);
+                setProfilePicture(file);
+            }
         }
+
     }
 
     const initialVal = {

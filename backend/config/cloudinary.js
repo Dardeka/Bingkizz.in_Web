@@ -13,7 +13,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'Bingkizz.In',
+        folder: 'bingkizz',
         allowed_formats: ['jpg', 'png', 'jpeg', 'mp4']
     }
 });

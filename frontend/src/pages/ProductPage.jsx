@@ -53,8 +53,7 @@ function ProductPage(){
     return(
         <div>
             <Header />
-
-            <div className="pt-[120px] justify-items-center content-center ml-[100px]">
+            <div className="pt-[120px] justify-items-center content-center ml-[100px] mr-[100px]">
                 <div className="text-center text-3xl font-bold mb-[30px] text-[#e03636]">All Products</div>
                 <div class="grid grid-cols-4 gap-4">
                     {products.map(product => (
@@ -62,7 +61,7 @@ function ProductPage(){
                             <div className="w-[200px] h-[200px] bg-gray-400 rounded-lg">
                                 <img src={`${product.image}`} alt={product.name} className="w-full h-full object-cover rounded-lg" />
                             </div>
-                            <div className="mt-[15px] text-lg font-bold text-[#e03636]">{product.name}</div>
+                            <div className="mt-[15px] text-lg font-bold text-[#e03636] mx-[10px]">{product.name}</div>
                             <button className="!w-[200px] h-10 mt-[10px] !bg-[#e03636] border-none rounded-[8px] text-white cursor-pointer hover:!bg-[#f16363]" onClick={() => handleSeeDetail(product.id)}>See Detail</button>
                         </div>
                     ))}

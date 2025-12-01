@@ -16,7 +16,7 @@ function HeroSection(){
                     delay: 3000,
                 })
             ]}>
-                <CarouselContent className="w-full">
+                <CarouselContent className="w-screen">
                     <CarouselItem><img src="/carousel/Carousel-1.png" alt="" /></CarouselItem>
                     <CarouselItem><img src="/carousel/Carousel-2.png" alt="" /></CarouselItem>
                     <CarouselItem><img src="/carousel/Carousel-3.png" alt="" /></CarouselItem>

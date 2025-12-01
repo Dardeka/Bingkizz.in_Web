@@ -143,7 +143,14 @@ function KelolaProduk(){
     const handleAddImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setAddFormData({ ...addFormData, image: file });
+            const limit = 2000
+            const size = file.size / 1024
+            if(size > limit){
+                alert("Ukuran file terlalu besar! Maksimal 2MB.")
+                return false
+            }else{
+                setAddFormData({ ...addFormData, image: file });
+            }
         }
     };
 
@@ -278,7 +285,6 @@ function KelolaProduk(){
                                     <TableCell className="font-medium">{product.id}</TableCell>
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell>{product.stock}</TableCell>
-                                    {/* Format harga sebagai Rupiah (optional) */}
                                     <TableCell>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.price)}</TableCell>
                                     <TableCell className="text-center">{product.status}</TableCell>
                                 </TableRow>

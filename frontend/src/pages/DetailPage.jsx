@@ -159,7 +159,7 @@ function DetailPage(){
                 <div className="flex flex-col text-black ml-[80px] w-full mr-[45px]">
                     <div className="flex flex-col items-start">
                         <p className="text-2xl text-left font-bold">{product.productName}</p>
-                        <p className="text-xl mt-4">Rp. {product.productPrice}</p>
+                        <p className="text-xl mt-4">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.productPrice)}</p>
                         <p className="w-[600px] text-justify text-sm mt-[23px]">{product.productDesc}</p>
                         <p className="text-xl mt-[27px]"><b>Tersedia :</b> {product.productStock}</p>
                     </div>
@@ -203,7 +203,7 @@ function DetailPage(){
                         <h3>{prod.productName}</h3>
                         <br />
                         <div className="flex flex-row gap-5 items-center justify-between">
-                            <p>Rp {prod.productPrice}</p>
+                            <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(prod.productPrice)}</p>
                             <Button className="!bg-[#e03636] !text-white w-[100px] font-bold">Lihat Detail</Button>
                         </div>
                     </div>

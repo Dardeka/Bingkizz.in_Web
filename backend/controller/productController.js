@@ -4,7 +4,7 @@ export const addProduct = async (req, res) => {
     try {
         const productData = new Product(req.body);
         const { productName, productDesc, productStock, productPrice } = productData;
-        const productImage = req.file ? `/images/${req.file.filename}` : ''
+        const productImage = req.file.path
 
         const newProduct = await Product.create({
             productName,
