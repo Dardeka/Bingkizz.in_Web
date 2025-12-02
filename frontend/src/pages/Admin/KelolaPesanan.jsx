@@ -22,8 +22,8 @@ function KelolaPesanan(){
         navigate("/admin/pesanan-selesai")
     }
 
-    const handleComplain = () => {
-        navigate("/admin/complain")
+    const handleReview = () => {
+        navigate("/admin/reviews")
     }
 
 
@@ -56,8 +56,8 @@ function KelolaPesanan(){
                             </button>
                         </li>
                         <li>
-                            <button className="list1" onClick={() => {handleComplain()}}>
-                            <p>Complain</p>
+                            <button className="list1" onClick={() => {handleReview()}}>
+                            <p>Reviews</p>
                             </button>
                         </li>
                         </ul>

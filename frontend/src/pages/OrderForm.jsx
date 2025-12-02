@@ -22,6 +22,7 @@ function OrderForm() {
   const shippingPrice = 10000;
   const assurancePrice = 10000;
   const [accessToken, setAccessToken] = useState("");
+  const [order, setOrder] = useState(null);
   const [items, setItems] = useState([]);
   const [subTotal, setSubtotal] = useState(0);
   const [receiverName, setReceiverName] = useState("");
@@ -31,10 +32,12 @@ function OrderForm() {
 
   useEffect(() => {
     const token = sessionStorage.getItem('accessToken');
+    const order = sessionStorage.getItem('orderData');
     
     if (token) {
       setAccessToken(token);
       // fetchUserData(token);
+      setOrder(order);
     }
 
     function decodeJWT(token) {
@@ -120,12 +123,21 @@ function OrderForm() {
         return;
       }
 
+      const itemsToRemove = items.map(item => ({
+          productId: item.id, 
+          quantity: item.quantity
+      }));
+
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cart/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "accessToken": token,
-        }
+        },
+        body: JSON.stringify({
+          items: itemsToRemove,
+          amount: order.subtotal
+        })
       });
 
       const data = await response.json();
@@ -174,7 +186,7 @@ function OrderForm() {
       }
 
       // Ini kirim initial data ke database order
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/addOrder`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/addOrder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,8 +209,8 @@ function OrderForm() {
         throw new Error(errorData.message || 'Failed to create order');
       }
 
-      const orderData = await res.json();
-      console.log("Order created successfully:", orderData);
+      const Data = await res.json();
+      console.log("Order created successfully:", Data);
 
       // Ini mulai midtrans
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/checkout/`, {
@@ -207,7 +219,7 @@ function OrderForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          orderId: orderData.orderID,
+          orderId: Data.orderID,
           name: values.receiverName,
           email: values.email,
           amount: values.grandTotal,
@@ -225,26 +237,27 @@ function OrderForm() {
       window.snap.pay(data.token, {
       onSuccess: async function (result) {
         console.log("Payment success:", result);
+        alert("Pembayaran berhasil!");
 
-        const updateCart = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder`, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updateOrder`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',},
           body: JSON.stringify({
-            orderId: orderData.orderID,
+            orderId: Data.orderID,
             targetStatus: "Payment",
             status: "Paid",
-            updatedAt: new Date()
+            updatedTime: new Date()
           })
         });
-        const updateData = await updateCart.json();
+        // const updateData = await updateCart.json();
         // const deleteSuccess = await handleDeleteCart(userToken);
         // if (deleteSuccess) {
         //   alert("Pembayaran berhasil dan keranjang dikosongkan.");
-        //   navigate('/');
+        //   // navigate('/');
         // }else{
         //   alert("Pembayaran berhasil tetapi gagal mengosongkan keranjang. Silahkan hubungi admin.");
-        //   navigate('/');
+        //   // navigate('/');
         // }
       },
       onPending: function (result) {
@@ -256,12 +269,12 @@ function OrderForm() {
         alert("Terjadi kesalahan pada pembayaran!");
       },
       onClose: async function () {
-        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/updateOrder`, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updateOrder`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',},
           body: JSON.stringify({
-            orderId: orderData.orderID,
+            orderId: Data.orderID,
             targetStatus: "Canceled",
             status: "Cancelled"
           })

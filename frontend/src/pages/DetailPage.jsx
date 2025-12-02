@@ -160,7 +160,9 @@ function DetailPage(){
                     <div className="flex flex-col items-start">
                         <p className="text-2xl text-left font-bold">{product.productName}</p>
                         <p className="text-xl mt-4">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.productPrice)}</p>
-                        <p className="w-[600px] text-justify text-sm mt-[23px]">{product.productDesc}</p>
+                        <div style={{whiteSpace: "pre-wrap"}} className="text-start mt-[20px]">
+                            {product.productDesc.trim()}
+                        </div>
                         <p className="text-xl mt-[27px]"><b>Tersedia :</b> {product.productStock}</p>
                     </div>
                     <div className="flex flex-row justify-between items-center mt-[29px]">
@@ -170,13 +172,13 @@ function DetailPage(){
                             <Button className="!bg-transparent" onClick={() => handleQuantityChange(1)}>+</Button>
                         </div>
                         <div className="flex justify-end">
-                            <Button className="!bg-[#00FF62] !text-black w-[180px] font-bold shadow-xl/10 hover:shadow-xl/30" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Tambah ke Keranjang</Button>
+                            <Button className="!bg-[#00FF62] !text-black w-[225px] font-bold shadow-xl/10 hover:shadow-xl/30" onClick={handleAddToCart} disabled={isAdding}><FaCartPlus /> Tambah ke Keranjang</Button>
                         </div>
                     </div>
                 </div>
             </div>
             {/* Review Section */}
-            <div className="flex flex-row mt-[15px] ml-[60px] mb-[40px]">
+            <div className="flex flex-row mt-[100px] ml-[60px] mb-[40px]">
                 <div className="w-[175px] flex flex-col items-start">
                     <img src="/Icons/quote.png" alt="" width="80px" />
                     <br />

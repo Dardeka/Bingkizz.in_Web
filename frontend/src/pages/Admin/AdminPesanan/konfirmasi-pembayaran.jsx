@@ -28,7 +28,7 @@ function KonfirmasiPembayaran(){
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/showOrders`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/showOrders`);
 
                 if(!response.ok){
                     return res.status(500).json('Failed to fetch order data');
@@ -60,13 +60,13 @@ function KonfirmasiPembayaran(){
     return(
         <div>
             <HeaderAdmin/>
-            <div className="px-10 w-screen pt-32">
+            <div className="px-10 w-screen pt-32 mb">
                 <h1 className="text-3xl font-bold mb-5">Konfirmasi Pembayaran</h1>
                 <div className="flex flex-row justify-between my-5">
                     <Button className="!bg-red-500 !text-white" onClick={handleBack}>Back</Button>
                     <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat List Pesanan</Button>
                 </div>
-                <div className="">
+                <div className="overflow-y-auto" style={{ maxHeight: '500px' }}>
                     <Table>
                         <TableHeader className="border-b-2 border-solid border-black-700 bg-[#9f152f]">
                             <TableRow>

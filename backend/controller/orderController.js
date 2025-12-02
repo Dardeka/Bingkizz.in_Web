@@ -34,11 +34,12 @@ export const addOrder = async (req, res) => {
     }
 }
 
+// Update order in admin
 export const updateOrder = async (req, res) => {
     try {
         const {orderId, targetStatus, status, updateTime} = req.body;
         console.log("Ini order ID : ", orderId)
-        console.log("Ini status : ", status)
+        // console.log("Ini URL image: ", req.file.path)
         
         if(targetStatus == "Payment"){
             await Order.findByIdAndUpdate(orderId, {paymentStatus: status, shippingStatus: "Processing Order", updatedAt: updateTime}, {new: true})
@@ -55,6 +56,26 @@ export const updateOrder = async (req, res) => {
     }
 }
 
+export const updateDelivery = async (req, res) => {
+    try {
+        const { orderId, shipmentNum, shipmentName, shipmentDate } = req.body
+        const shipmentPicture = req.file.path
+        const formattedDetail = {
+            shippingReceiptImg: shipmentPicture,
+            trackingNumber: shipmentNum,
+            shippingCarrier: shipmentName,
+            shippingDate: shipmentDate
+        }
+        console.log("Detail shipment: ", formattedDetail)
+        await Order.findByIdAndUpdate(orderId, {shippingDetail: formattedDetail}, {new: true})
+
+        const orderNow = await Order.findById(orderId)
+        res.status(200).json(orderNow)
+    } catch (error) {
+        res.status(500).json({error: error.message})
+    }
+}
+
 // get all orders
 export const showOrders = async (req, res) => {
     try {
@@ -62,5 +83,22 @@ export const showOrders = async (req, res) => {
         res.status(200).json(allOrders)
     } catch (error) {
         res.status(500).json({error: error.message})
+    }
+}
+
+// update certain order from user
+export const updateCertainOrder = async(req, res) => {
+    try {
+        const { orderId, updateTime} = req.body
+        console.log("The body : ",req.body)
+
+        // update delivery confirmation
+        await Order.findByIdAndUpdate(orderId, {shippingStatus: "Delivered", updatedAt: updateTime}, {new: true})
+
+        const updatedDeliveryOrder = await Order.findById(orderId)
+        console.log("The new status: ", updatedDeliveryOrder)
+        res.status(200).json(updatedDeliveryOrder)
+    } catch (error) {
+        console.log({error: error.message})
     }
 }

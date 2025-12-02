@@ -22,13 +22,13 @@ function PesananSelesai(){
     }
 
     const handleNext = () => {
-        navigate("/admin/complain");
+        navigate("/admin/reviews");
     }
 
     useEffect(() => {
         const fetchOrderData = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/order/showOrders`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/showOrders`);
 
                 if(!response.ok){
                     return res.status(500).json('Failed to fetch order data');
@@ -59,11 +59,11 @@ function PesananSelesai(){
     return(
         <div>
             <HeaderAdmin/>
-            <div className="px-10 w-screen  pt-32">
+            <div className="px-10 w-screen pt-32 mb-20">
                 <h1 className="text-3xl font-bold mb-5">Daftar Pesanan - Pesanan Selesai</h1>
                 <div className="flex flex-row justify-between my-5">
                     <Button className="!bg-red-500 !text-white" onClick={handleBack}>Lihat Pesanan Dikirim</Button>
-                    <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Complain</Button>
+                    <Button className="!bg-red-500 !text-white" onClick={handleNext}>Lihat Review</Button>
                 </div>
                 <div>
                     <Table>

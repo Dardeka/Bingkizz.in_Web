@@ -12,10 +12,10 @@ import KonfirmasiPembayaran from "../pages/Admin/AdminPesanan/konfirmasi-pembaya
 import ListPesanan from "../pages/Admin/AdminPesanan/list-pesanan";
 import PesananDikirim from "../pages/Admin/AdminPesanan/pesanan-dikirim";
 import PesananSelesai from "../pages/Admin/AdminPesanan/pesanan-selesai";
-import Complain from "../pages/Admin/AdminPesanan/complain";
 import OrderForm from "../pages/OrderForm";
 import ProfilePage from "../pages/profilePage";
 import OrderHistory from "../pages/orderHistory";
+import Review from "../pages/Admin/AdminPesanan/review";
 
 function AppRouter() {
   return (
@@ -41,7 +41,7 @@ function AppRouter() {
         <Route path="/admin/list-pesanan" element={<ListPesanan/>}/>
         <Route path="/admin/pesanan-dikirim" element={<PesananDikirim />}/>
         <Route path="/admin/pesanan-selesai" element={<PesananSelesai />}/>
-        <Route path="/admin/complain" element={<Complain />}/>
+        <Route path="/admin/reviews" element={<Review />}/>
        
       </Routes>
     </Router>

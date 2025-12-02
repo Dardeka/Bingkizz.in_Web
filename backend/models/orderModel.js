@@ -33,6 +33,25 @@ const productReview = new mongoose.Schema({
     }
 })
 
+const orderShipment = new mongoose.Schema({
+    shippingReceiptImg: {
+        type: String,
+        required: true,
+    },
+    trackingNumber: {
+        type: String,
+        required: true
+    },
+    shippingCarrier: {
+        type: String,
+        required: true
+    },
+    shippingDate: {
+        type: Date,
+        required: true
+    }
+}, {_id: false})
+
 const orderSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -61,6 +80,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: "Pending"
     },
+    shippingDetail: [orderShipment],
     shippingStatus: {
         type: String,
         required: true,

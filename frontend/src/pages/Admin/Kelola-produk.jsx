@@ -20,6 +20,12 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  NativeSelect,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+} from "@/components/ui/native-select"
 
 function KelolaProduk(){
     // 1. STATE PRODUK DAN STATUS
@@ -53,7 +59,7 @@ function KelolaProduk(){
             const data = await response.json();
             
             const formattedProducts = data.map(item => ({
-                id: item.id,
+                id: item._id,
                 name: item.productName,
                 image: item.productImg,
                 stock: item.productStock,
@@ -171,12 +177,29 @@ function KelolaProduk(){
         setIsAddDialogOpen(true);
     }
 
+    const handleUpdateStatus = async (productId, newStatus) => {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/product/update/${productId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: productId,
+                targetUpdate: "Status", 
+                newState: newStatus,
+            })
+        })
+    }
+
     return(
         <div className="static top-0 pt-32 h-[1920px] w-screen left-0 bg-[url(/images/Background.png)]">
             <HeaderAdmin/>
             <div className="flex flex-col w-[1096px] mr-auto ml-auto">
                 <div className="flex flex-row justify-between items-center">
-                    <h3 className="font-bold">Kelola Produk</h3>
+                    <div className="flex flex-col text-start">
+                        <h3 className="font-bold text-3xl">Kelola Produk</h3>
+                        <p>Atur produk yang tersedia di toko Anda</p>
+                    </div>
                     
                     <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                         <DialogTrigger asChild>
@@ -203,7 +226,7 @@ function KelolaProduk(){
                                     {/* Deskripsi Produk */}
                                     <div className="grid gap-3">
                                         <label htmlFor="desc">Deskripsi Produk</label>
-                                        <Input id="desc" name="desc" value={addFormData.desc} onChange={handleAddFormChange}/>
+                                        <Textarea id="desc" name="desc" value={addFormData.desc} onChange={handleAddFormChange} rows={5}/>
                                     </div>
                                     {/* Jumlah Stok */}
                                     <div className="grid gap-3">
@@ -282,11 +305,16 @@ function KelolaProduk(){
                             {/* Loop data dari state products yang telah di-fetch */}
                             {products.map((product) => (
                                 <TableRow key={product.id}>
-                                    <TableCell className="font-medium">{product.id}</TableCell>
+                                    <TableCell>{product.id}</TableCell>
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell>{product.stock}</TableCell>
                                     <TableCell>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.price)}</TableCell>
-                                    <TableCell className="text-center">{product.status}</TableCell>
+                                    <TableCell className="flex flex-row items-center justify-center">
+                                        <NativeSelect defaultValue={product.status} onChange={(event) => handleUpdateStatus(product.id, event.target.value)}>
+                                            <NativeSelectOption value="Active" className="bg-green-400 text-white">Active</NativeSelectOption>
+                                            <NativeSelectOption value="Inactive" >Inactive</NativeSelectOption>
+                                        </NativeSelect>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

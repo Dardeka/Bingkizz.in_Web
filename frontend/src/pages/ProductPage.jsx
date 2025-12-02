@@ -27,7 +27,8 @@ function ProductPage(){
                 name: item.productName,
                 stock: item.productStock,
                 price: item.productPrice,
-                image: item.productImg
+                image: item.productImg,
+                status: item.productStatus,
             }));
 
             console.log("Fetched products:", formattedProducts);
@@ -56,7 +57,7 @@ function ProductPage(){
             <div className="pt-[120px] justify-items-center content-center ml-[100px] mr-[100px]">
                 <div className="text-center text-3xl font-bold mb-[30px] text-[#e03636]">All Products</div>
                 <div class="grid grid-cols-4 gap-4">
-                    {products.map(product => (
+                    {products.filter(product => product.status === "Active").map(product => (
                         <div key={product.id} className="w-[250px] h-auto py-5 bg-white border border-[#e03636] flex flex-col items-center justify-center rounded-[10px] hover:shadow-xl/30">
                             <div className="w-[200px] h-[200px] bg-gray-400 rounded-lg">
                                 <img src={`${product.image}`} alt={product.name} className="w-full h-full object-cover rounded-lg" />

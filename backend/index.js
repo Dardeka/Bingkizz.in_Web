@@ -36,7 +36,7 @@ app.use("/api/cart", cartRoute)
 app.use('/api/checkout', checkoutRouter)
 
 // Order Route
-app.use("/api/admin/order", orderRoute)
+app.use("/api/order", orderRoute)
 
 let handler = null
 

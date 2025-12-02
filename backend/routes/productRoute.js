@@ -1,5 +1,5 @@
 import express from 'express'
-import { addProduct, getCertainProduct, showProduct } from '../controller/productController.js'
+import { addProduct, getCertainProduct, showProduct, updateProduct } from '../controller/productController.js'
 import multer from 'multer'
 import { storage } from '../config/cloudinary.js';
 
@@ -13,5 +13,7 @@ productRoute.post('/add-product', upload.single('image'), addProduct)
 productRoute.get('/show-products', showProduct)
 
 productRoute.get('/show-products/:id', getCertainProduct)
+
+productRoute.put('/update/:id', updateProduct)
 
 export default productRoute

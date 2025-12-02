@@ -1,5 +1,7 @@
 import Cart from '../models/cartModel.js'
 import Product from '../models/productModel.js'
+import mongoose from 'mongoose';
+
 // create cart
 export const createCart = async (req, res) => {
     try {
@@ -99,21 +101,57 @@ export const deleteCart = async (req, res) => {
       console.error("DEBUG: Token tidak mengandung User ID.");
       return res.status(401).json({ error: "Token invalid, please login again." });
     }
-    console.log("Isi request : ", req.body);
-    const cart = await Cart.findOne({userId: req.user.id});
-
-    console.log("Produk ditemukan:", req.body.items);
-    for (const item in req.body.items){
-        const updateCart = await (req.body.items[item].productId)
-        console.log("Produk adalah :", updateCart);
+    
+    const { items } = req.body; 
+    
+    if (!items || !Array.isArray(items)) {
+      return res.status(400).json({ error: "Invalid items array" });
     }
 
-    cart.totalPrice = 0
+    // 1. Konversi semua string ID dari request menjadi objek ObjectId
+    const objectIdsToRemove = items.map(i => new mongoose.Types.ObjectId(i.productId)); // <-- PERUBAHAN UTAMA
+
+    const cart = await Cart.findOne({ userId: req.user.id });
+
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    const initialItemCount = cart.cartItems.length;
+    
+    // 2. Gunakan .some() dan .equals() untuk memfilter
+    cart.cartItems = cart.cartItems.filter(
+      (item) => !objectIdsToRemove.some(
+        (idToRemove) => idToRemove.equals(item.productId) // <-- PERUBAHAN UTAMA
+      )
+    );
+    
+    const removedCount = initialItemCount - cart.cartItems.length;
+    
+    if (removedCount === 0) {
+        return res.status(404).json({ error: "No matching items found in cart to remove." });
+    }
+    
+    // --- Perhitungan Ulang Total Harga (Logika yang Benar) ---
+    let newTotal = 0;
+    for (const item of cart.cartItems) {
+        // item.productId di sini adalah ObjectId (sudah aman)
+        const product = await Product.findById(item.productId); 
+        if (product) {
+            newTotal += product.productPrice * item.quantity; 
+        } else {
+            console.warn(`Product ID ${item.productId} not found during total price recalculation.`);
+        }
+    }
+
+    cart.totalPrice = newTotal; 
+
     await cart.save();
 
-    res.json({ message: "All cart items deleted successfully" });
+    res.json({ message: `${removedCount} selected cart item(s) removed successfully.`, itemsRemoved: items.map(i => i.productId) });
   } catch (error) {
     console.error(error);
+    // Pastikan error Mongoose (misal: ID tidak valid) tertangkap di sini
     res.status(500).json({ error: error.message });
   }
 };
